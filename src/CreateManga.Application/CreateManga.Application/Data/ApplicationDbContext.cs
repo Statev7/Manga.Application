@@ -37,8 +37,9 @@
 
             builder
                 .Entity<Manga>()
-                .Property(m => m.MangaName)
-                .IsRequired();
+                .HasIndex(m => m.Name)
+                .IsUnique();
+
         }
     }
 }

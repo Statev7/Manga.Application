@@ -47,10 +47,11 @@ namespace CreateManga.Application
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
 
-                var serviceProvider = app.ApplicationServices.CreateScope().ServiceProvider;
-                if (serviceProvider.GetRequiredService<ApplicationDbContext>().Database.EnsureCreated())
+                using (var serviceScope = app.ApplicationServices.CreateScope())
                 {
+                    var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
+                    dbContext.Database.Migrate();
                 }
             }
             else

@@ -23,75 +23,155 @@
         [HttpGet]
         public IActionResult Index()
         {
-            List<MangaViewModel> mangasNames = dbContext.Mangas
+            List<MangaViewModel> mangas = this.dbContext.Mangas
                 .Select(manga => new MangaViewModel
                 {
-                    MangaName = manga.MangaName,
+                    Id = manga.Id,
+                    MangaName = manga.Name,
+                    StartDate = manga.StartDate,
+                    EndDate = manga.EndDate,
+                    Description = manga.Description,
                 })
                 .ToList();
 
             MangasViewModel mangasViewModel = new MangasViewModel();
 
-            mangasViewModel.Mangas = mangasNames;
+            mangasViewModel.Mangas = mangas;
+            
+            return this.View(mangasViewModel);
+        }
 
-            return View(mangasViewModel);
+        public IActionResult Details(int id)
+        {
+            Manga manga = this.dbContext.Mangas
+                .Select(m => new Manga
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    StartDate = m.StartDate,
+                    EndDate = m.EndDate,
+                    Description = m.Description,
+                })
+                .SingleOrDefault(m => m.Id == id);
+
+            bool isMangaNull = manga == null;
+            if (isMangaNull)
+            {
+                return this.RedirectToRoute("index");
+            }
+
+            return this.View(manga);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-           
-            return View();
+            return this.View();
         }
 
         [HttpPost]
-        public IActionResult Create(MangaBindingModel model)
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Create(CreateMangaBindingModel model)
         {
-            Manga manga = new Manga();
-
             if (ModelState.IsValid == false)
             {
-                return View("create", model);
+                return this.View("create", model);
             }
 
-            manga.MangaName = model.Name;
+            Manga mangaFromDb = this.dbContext.Mangas
+                .Select(manga => new Manga
+                {
+                    Id = manga.Id,
+                    Name = manga.Name,
+                    StartDate = manga.StartDate,
+                    EndDate = manga.EndDate,
+                    Description = manga.Description,
+                })
+                .SingleOrDefault();
 
-            dbContext.Mangas.Add(manga);
-            dbContext.SaveChanges();
+            bool isMangaAlreadyInDb = mangaFromDb != null;
+            if (isMangaAlreadyInDb)
+            {
+                return this.RedirectToAction("index");
+            }
 
-            return RedirectToAction("index");
+            Manga manga = new Manga();
+
+            manga.Name = model.Name;
+            manga.StartDate = model.StartDate;
+            manga.EndDate = model.EndDate;
+            manga.Description = model.Description;
+
+            this.dbContext.Mangas.Add(manga);
+            this.dbContext.SaveChanges();
+
+            return this.RedirectToAction("index");
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            UpdateMangaBiningModel manga = this.dbContext.Mangas
+                .Select(m => new UpdateMangaBiningModel
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    StartDate = m.StartDate,
+                    EndDate = m.EndDate,
+                    Description = m.Description,
+                })
+                .SingleOrDefault(m => m.Id == id);
+
+            bool isMangaNull = manga == null;
+            if (isMangaNull)
+            {
+                return this.RedirectToAction("index");
+            }
+
+            return this.View(manga);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Update(UpdateMangaBiningModel model)
+        {
+            Manga manga = this.dbContext.Mangas
+                .Find(model.Id);
+
+            bool isMangaNull = manga == null;
+            if (isMangaNull)
+            {
+                return this.View(model);
+            }
+
+            manga.Name = model.Name;
+            manga.StartDate = model.StartDate;
+            manga.EndDate = model.EndDate;
+            manga.Description = model.Description;
+
+            this.dbContext.Mangas.Update(manga);
+            this.dbContext.SaveChanges();
+
+            return this.RedirectToAction("index");
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
             Manga manga = new Manga();
-
-            bool isIdLessOrEqualToZero = id <= 0;
-            bool isMangaAreNull = manga == null;
-
-            if (isIdLessOrEqualToZero || isMangaAreNull)
-            {
-                return RedirectToAction("index");
-            }
-
-            manga = dbContext.Mangas
+            manga = this.dbContext.Mangas
                    .Find(id);
 
-            dbContext.Mangas.Remove(manga);
-            dbContext.SaveChanges();
+            bool isMangaNull = manga == null;
+            if (isMangaNull)
+            {
+                return this.RedirectToAction("index");
+            }
 
-            return RedirectToAction("Index");
-        }
+            this.dbContext.Mangas.Remove(manga);
+            this.dbContext.SaveChanges();
 
-        [HttpGet]
-        public IActionResult Update(int id)
-        {
-            Manga manga = dbContext.Mangas
-                .Where(manga => manga.MangaId == id)
-                .SingleOrDefault();
-
-            return RedirectToAction("index");
+            return this.RedirectToAction("index");
         }
     }
 }

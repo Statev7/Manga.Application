@@ -1,11 +1,10 @@
-﻿namespace CreateManga.Application.Data.Models
+﻿namespace CreateManga.Application.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class Manga
+    public class UpdateMangaBiningModel
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
