@@ -1,5 +1,14 @@
 ﻿@{
-
+    @model MangasViewModel
 }
 
-<h1>Test</h1>
+<h1>Manga index view</h1>
+
+@{ 
+    foreach (var manga in Model.Mangas)
+    {
+        <li>
+            @manga.MangaName
+        </li>
+    }
+}

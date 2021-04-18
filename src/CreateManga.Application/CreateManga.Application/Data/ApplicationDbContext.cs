@@ -34,6 +34,11 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder
+                .Entity<Manga>()
+                .Property(m => m.MangaName)
+                .IsRequired();
         }
     }
 }
