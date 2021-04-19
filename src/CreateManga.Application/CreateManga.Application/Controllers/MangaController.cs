@@ -43,11 +43,11 @@
 
         public IActionResult Details(int id)
         {
-            Manga manga = this.dbContext.Mangas
-                .Select(m => new Manga
+            MangaViewModel manga = this.dbContext.Mangas
+                .Select(m => new MangaViewModel
                 {
                     Id = m.Id,
-                    Name = m.Name,
+                    MangaName = m.Name,
                     StartDate = m.StartDate,
                     EndDate = m.EndDate,
                     Description = m.Description,
@@ -79,15 +79,9 @@
             }
 
             Manga mangaFromDb = this.dbContext.Mangas
-                .Select(manga => new Manga
-                {
-                    Id = manga.Id,
-                    Name = manga.Name,
-                    StartDate = manga.StartDate,
-                    EndDate = manga.EndDate,
-                    Description = manga.Description,
-                })
+                .Where(manga => manga.Name == model.Name)
                 .SingleOrDefault();
+                
 
             bool isMangaAlreadyInDb = mangaFromDb != null;
             if (isMangaAlreadyInDb)

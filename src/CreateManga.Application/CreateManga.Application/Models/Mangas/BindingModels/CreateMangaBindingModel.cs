@@ -9,18 +9,17 @@
         [Required]
         [MinLength(2)]
         [MaxLength(32)]
-        [DisplayName("Име")]
+        [DisplayName("Manga name")]
         public string Name { get; set; }
 
         [Required]
-        [DisplayName("Дата на започване")]
+        [DisplayName("Release date")]
         public DateTime StartDate { get; set; }
 
-        [DisplayName("Дата на приключване")]
+        [DisplayName("End date")]
         public DateTime? EndDate { get; set; }
 
         [Required]
-        [DisplayName("Описание")]
         public string Description { get; set; }
     }
 }
