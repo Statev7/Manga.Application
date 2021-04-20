@@ -1,6 +1,7 @@
 ﻿namespace CreateManga.Application.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Manga
@@ -20,5 +21,7 @@
 
         [Required]
         public string Description { get; set; }
+
+        public virtual ICollection<Character> Characters { get; set; }
     }
 }

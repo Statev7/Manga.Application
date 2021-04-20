@@ -18,6 +18,8 @@
 
         public DbSet<Manga> Mangas { get; set; }
 
+        public DbSet<Character> Characters { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -40,6 +42,11 @@
                 .HasIndex(m => m.Name)
                 .IsUnique();
 
+            builder
+                .Entity<Character>()
+                .HasOne(character => character.Manga)
+                .WithMany(manga => manga.Characters)
+                .HasForeignKey(character => character.MangaId);
         }
     }
 }

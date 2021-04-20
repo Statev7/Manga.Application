@@ -9,11 +9,12 @@
 
     using CreateManga.Application.Data;
     using CreateManga.Application.Data.Models;
-    using CreateManga.Application.Models;
+    using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Models.Mangas.BindingModels;
 
     public class MangaController : Controller
     {
-        private ApplicationDbContext dbContext;
+        private readonly ApplicationDbContext dbContext;
 
         public MangaController(ApplicationDbContext dbContext)
         {
@@ -73,7 +74,7 @@
         [AutoValidateAntiforgeryToken]
         public IActionResult Create(CreateMangaBindingModel model)
         {
-            if (ModelState.IsValid == false)
+            if (this.ModelState.IsValid == false)
             {
                 return this.View("create", model);
             }
@@ -129,6 +130,11 @@
         [AutoValidateAntiforgeryToken]
         public IActionResult Update(UpdateMangaBiningModel model)
         {
+            if (this.ModelState.IsValid == false)
+            {
+                return this.View("create", model);
+            }
+
             Manga manga = this.dbContext.Mangas
                 .Find(model.Id);
 
