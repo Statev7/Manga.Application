@@ -1,0 +1,36 @@
+﻿@model IEnumerable<GetAllCharactersViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (GetAllCharactersViewModel character in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => character.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = character.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = character.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = character.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
