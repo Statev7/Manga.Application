@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     using CreateManga.Application.Data;
     using CreateManga.Application.Data.Models;
@@ -72,7 +73,7 @@
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Create(CreateMangaBindingModel model)
+        public async Task<IActionResult> Create(CreateMangaBindingModel model)
         {
             if (this.ModelState.IsValid == false)
             {
@@ -80,10 +81,8 @@
             }
 
             Manga mangaFromDb = this.dbContext.Mangas
-                .Where(manga => manga.Name == model.Name)
-                .SingleOrDefault();
+                .SingleOrDefault(manga => manga.Name == model.Name);
                 
-
             bool isMangaAlreadyInDb = mangaFromDb != null;
             if (isMangaAlreadyInDb)
             {
@@ -97,8 +96,8 @@
             manga.EndDate = model.EndDate;
             manga.Description = model.Description;
 
-            this.dbContext.Mangas.Add(manga);
-            this.dbContext.SaveChanges();
+            await this.dbContext.Mangas.AddAsync(manga);
+            await this.dbContext.SaveChangesAsync();
 
             return this.RedirectToAction("index");
         }
@@ -128,7 +127,7 @@
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Update(UpdateMangaBiningModel model)
+        public async Task<IActionResult> Update(UpdateMangaBiningModel model)
         {
             if (this.ModelState.IsValid == false)
             {
@@ -150,13 +149,13 @@
             manga.Description = model.Description;
 
             this.dbContext.Mangas.Update(manga);
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
 
             return this.RedirectToAction("index");
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             Manga manga = new Manga();
             manga = this.dbContext.Mangas
@@ -169,7 +168,7 @@
             }
 
             this.dbContext.Mangas.Remove(manga);
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
 
             return this.RedirectToAction("index");
         }

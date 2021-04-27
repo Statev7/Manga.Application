@@ -22,6 +22,7 @@
             this.dbContext = dbContext;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             IEnumerable<GetAllCharactersViewModel> characters = this.dbContext.Characters
@@ -50,6 +51,12 @@
                })
                .SingleOrDefault(character => character.Id == id);
 
+            bool isCharacterNull = character == null;
+            if (isCharacterNull)
+            {
+                return this.RedirectToAction("index");
+            }
+
             return this.View(character);
         }
 
@@ -65,6 +72,12 @@
                 .OrderBy(mangas => mangas.Name)
                 .ToList();
 
+            bool areMangasEmpty = mangas.Count() == 0;
+            if (areMangasEmpty)
+            {
+                this.RedirectToAction("index");
+            }
+
             ViewBag.mangas = mangas;
 
             return this.View();
@@ -72,7 +85,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateCharacterBindingModel model)
+        public async Task<IActionResult> Create(CreateCharacterBindingModel model)
         {
             if (this.ModelState.IsValid == false)
             {
@@ -86,7 +99,92 @@
             character.Ability = model.Ability;
             character.MangaId = model.MangaId;
 
-            this.dbContext.Characters.Add(character);
+            await this.dbContext.Characters.AddAsync(character);
+            await this.dbContext.SaveChangesAsync();
+
+            return this.RedirectToAction("index");
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            UpdateCharactersBindingModel character = this.dbContext.Characters
+               .Select(character => new UpdateCharactersBindingModel
+               {
+                   Id = character.Id,
+                   Name = character.Name,
+                   Age = character.Age,
+                   Gender = character.Gender,
+                   Ability = character.Ability,
+                   MangaId = character.MangaId,
+               })
+               .SingleOrDefault(character => character.Id == id);
+
+            IEnumerable<MangasIdNameViewModel> mangas = this.dbContext.Mangas
+                .Select(mangas => new MangasIdNameViewModel
+                {
+                    Id = mangas.Id,
+                    Name = mangas.Name,
+                })
+                .OrderBy(mangas => mangas.Name)
+                .ToList();
+
+            bool isCharacterNull = character == null;
+            bool areMangasEmpty = mangas.Count() == 0;
+            if (isCharacterNull || areMangasEmpty)
+            {
+                return this.RedirectToAction("index");
+            }
+
+            ViewBag.mangas = mangas;
+
+            return this.View(character);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Update(UpdateCharactersBindingModel model)
+        {
+            if (this.ModelState.IsValid == false)
+            {
+                return this.View(model);
+            }
+
+            Character character = this.dbContext.Characters
+                .Find(model.Id);
+
+            bool isCharacterNull = character == null;
+            if (isCharacterNull)
+            {
+                return this.RedirectToAction("index");
+            }
+
+            character.Name = model.Name;
+            character.Age = model.Age;
+            character.Gender = model.Gender;
+            character.Ability = model.Ability;
+            character.MangaId = model.MangaId;
+
+            this.dbContext.Characters.Update(character);
+            this.dbContext.SaveChanges();
+
+            return this.RedirectToAction("index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Character character = new Character();
+            character = this.dbContext.Characters
+                   .Find(id);
+
+            bool isCharacterNull = character == null;
+            if (isCharacterNull)
+            {
+                return this.RedirectToAction("index");
+            }
+
+            this.dbContext.Characters.Remove(character);
             this.dbContext.SaveChanges();
 
             return this.RedirectToAction("index");
