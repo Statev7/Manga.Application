@@ -143,7 +143,7 @@
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Update(UpdateCharactersBindingModel model)
+        public async Task<IActionResult> Update(UpdateCharactersBindingModel model)
         {
             if (this.ModelState.IsValid == false)
             {
@@ -166,13 +166,13 @@
             character.MangaId = model.MangaId;
 
             this.dbContext.Characters.Update(character);
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
 
             return this.RedirectToAction("index");
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             Character character = new Character();
             character = this.dbContext.Characters
@@ -185,7 +185,7 @@
             }
 
             this.dbContext.Characters.Remove(character);
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
 
             return this.RedirectToAction("index");
         }
