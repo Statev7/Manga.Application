@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CreateManga.Application</title>
+    <title>@ViewData["Title"] | CreateManga</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -11,7 +11,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CreateManga.Application</a>
+                <img src="~/Img/Logo.png" class="img-fluid" alt="Logo" style="margin-right: 15px"/>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CreateManga</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,13 +29,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Manga" asp-action="Index">Mangas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Manga" asp-action="Create">Create Manga</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Characters" asp-action="Index">Characters</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Characters" asp-action="Create">Create Character</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
