@@ -1,24 +1,35 @@
-﻿@{
-    @model MangasViewModel
-}
-
-<h1>Manga index view</h1>
+﻿@model MangasViewModel
 
 @{
-    foreach (var manga in Model.Mangas)
-    {
-        <li>
-            <a asp-controller="Manga" asp-action="Details" asp-route-id="@manga.Id">
-                @manga.MangaName
-            </a>
-            |
-            <a asp-controller="Manga" asp-action="Update" asp-route-id="@manga.Id">
-                Update
-            </a>
-            |
-            <a asp-controller="Manga" asp-action="Delete" asp-route-id="@manga.Id">
-                Delete
-            </a>
-        </li>
-    }
+    ViewData["Title"] = "All mangas";
 }
+
+
+<h1>Manga index view</h1>
+<br />
+<div>
+    <div>
+        <a class="btn btn-outline-primary" asp-action="Create">Create new Manga</a>
+    </div>
+    <hr />
+    <ul>
+        @{
+            foreach (var manga in Model.Mangas)
+            {
+                <li>
+                    <a asp-controller="Manga" asp-action="Details" asp-route-id="@manga.Id">
+                        @manga.MangaName
+                    </a>
+                    |
+                    <a asp-controller="Manga" asp-action="Update" asp-route-id="@manga.Id">
+                        Update
+                    </a>
+                    |
+                    <a asp-controller="Manga" asp-action="Delete" asp-route-id="@manga.Id">
+                        Delete
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</div>

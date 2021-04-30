@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<GetAllCharactersViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All characters";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Characters</h1>
+<br />
+<div>
+    <a class="btn btn-outline-primary" asp-action="Create">Create Character</a> 
+</div>
+<br />
 <table class="table">
     <thead>
         <tr>

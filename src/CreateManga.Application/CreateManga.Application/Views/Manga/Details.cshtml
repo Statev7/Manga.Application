@@ -1,7 +1,7 @@
 ﻿@model MangaViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"Details - {Model.MangaName}";
 
     bool isEndDateNull = Model.EndDate == null;
 }
