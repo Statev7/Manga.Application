@@ -1,12 +1,11 @@
 ﻿namespace CreateManga.Application.Services.Interfaces
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     using CreateManga.Application.Data.Models;
     using CreateManga.Application.Models.Mangas.BindingModels;
     using CreateManga.Application.Models.Mangas.ViewModels;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public interface IMangasService
     {
