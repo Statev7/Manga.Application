@@ -1,10 +1,11 @@
 ﻿namespace CreateManga.Application.Models.Mangas.ViewModels
 {
+    using System;
     using System.Collections.Generic;
 
     public class MangasViewModel
     {
-        public List<MangaViewModel> Mangas { get; set; }
+        public IEnumerable<MangaViewModel> Mangas { get; set; }
 
     }
 }

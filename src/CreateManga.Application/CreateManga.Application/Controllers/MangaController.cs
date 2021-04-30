@@ -1,43 +1,30 @@
 ﻿namespace CreateManga.Application.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
 
-    using CreateManga.Application.Data;
     using CreateManga.Application.Data.Models;
     using CreateManga.Application.Models.Mangas.ViewModels;
     using CreateManga.Application.Models.Mangas.BindingModels;
+    using CreateManga.Application.Services;
 
     public class MangaController : Controller
     {
-        private readonly ApplicationDbContext dbContext;
+        private readonly MangasService mangasService;
 
-        public MangaController(ApplicationDbContext dbContext)
+        public MangaController(MangasService mangasService)
         {
-            this.dbContext = dbContext;
+            this.mangasService = mangasService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            List<MangaViewModel> mangas = this.dbContext.Mangas
-                .Select(manga => new MangaViewModel
-                {
-                    Id = manga.Id,
-                    MangaName = manga.Name,
-                    StartDate = manga.StartDate,
-                    EndDate = manga.EndDate,
-                    Description = manga.Description,
-                })
-                .ToList();
+            IEnumerable<MangaViewModel> mangas = this.mangasService.GetAll();
 
             MangasViewModel mangasViewModel = new MangasViewModel();
-
             mangasViewModel.Mangas = mangas;
             
             return this.View(mangasViewModel);
@@ -45,16 +32,7 @@
 
         public IActionResult Details(int id)
         {
-            MangaViewModel manga = this.dbContext.Mangas
-                .Select(m => new MangaViewModel
-                {
-                    Id = m.Id,
-                    MangaName = m.Name,
-                    StartDate = m.StartDate,
-                    EndDate = m.EndDate,
-                    Description = m.Description,
-                })
-                .SingleOrDefault(m => m.Id == id);
+            MangaViewModel manga = this.mangasService.GetDetailsById(id);
 
             bool isMangaNull = manga == null;
             if (isMangaNull)
@@ -80,8 +58,7 @@
                 return this.View("create", model);
             }
 
-            Manga mangaFromDb = this.dbContext.Mangas
-                .SingleOrDefault(manga => manga.Name == model.Name);
+            Manga mangaFromDb = this.mangasService.GetByModelName(model.Name);
                 
             bool isMangaAlreadyInDb = mangaFromDb != null;
             if (isMangaAlreadyInDb)
@@ -89,15 +66,7 @@
                 return this.RedirectToAction("index");
             }
 
-            Manga manga = new Manga();
-
-            manga.Name = model.Name;
-            manga.StartDate = model.StartDate;
-            manga.EndDate = model.EndDate;
-            manga.Description = model.Description;
-
-            await this.dbContext.Mangas.AddAsync(manga);
-            await this.dbContext.SaveChangesAsync();
+            await this.mangasService.CreateAsync(model);
 
             return this.RedirectToAction("index");
         }
@@ -105,16 +74,7 @@
         [HttpGet]
         public IActionResult Update(int id)
         {
-            UpdateMangaBiningModel manga = this.dbContext.Mangas
-                .Select(m => new UpdateMangaBiningModel
-                {
-                    Id = m.Id,
-                    Name = m.Name,
-                    StartDate = m.StartDate,
-                    EndDate = m.EndDate,
-                    Description = m.Description,
-                })
-                .SingleOrDefault(m => m.Id == id);
+            UpdateMangaBiningModel manga = this.mangasService.UpdateById(id);
 
             bool isMangaNull = manga == null;
             if (isMangaNull)
@@ -134,22 +94,7 @@
                 return this.View("create", model);
             }
 
-            Manga manga = this.dbContext.Mangas
-                .Find(model.Id);
-
-            bool isMangaNull = manga == null;
-            if (isMangaNull)
-            {
-                return this.View(model);
-            }
-
-            manga.Name = model.Name;
-            manga.StartDate = model.StartDate;
-            manga.EndDate = model.EndDate;
-            manga.Description = model.Description;
-
-            this.dbContext.Mangas.Update(manga);
-            await this.dbContext.SaveChangesAsync();
+            await this.mangasService.UpdateAsync(model);
 
             return this.RedirectToAction("index");
         }
@@ -157,18 +102,7 @@
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            Manga manga = new Manga();
-            manga = this.dbContext.Mangas
-                   .Find(id);
-
-            bool isMangaNull = manga == null;
-            if (isMangaNull)
-            {
-                return this.RedirectToAction("index");
-            }
-
-            this.dbContext.Mangas.Remove(manga);
-            await this.dbContext.SaveChangesAsync();
+            await this.mangasService.DeleteAsync(id);
 
             return this.RedirectToAction("index");
         }
