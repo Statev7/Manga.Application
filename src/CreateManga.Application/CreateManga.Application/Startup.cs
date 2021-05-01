@@ -17,6 +17,7 @@ namespace CreateManga.Application
 
     using CreateManga.Application.Data;
     using CreateManga.Application.Services;
+    using CreateManga.Application.Services.Interfaces;
 
     public class Startup
     {
@@ -39,7 +40,7 @@ namespace CreateManga.Application
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
-            services.AddTransient<MangasService>();
+            RegisterDatabaseServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,5 +80,12 @@ namespace CreateManga.Application
                 endpoints.MapRazorPages();
             });
         }
+
+        private static void RegisterDatabaseServices(IServiceCollection services)
+        {
+            services.AddScoped<IMangasService, MangasService>();
+            services.AddScoped<ICharactersService, CharactersService>();
+        }
+
     }
 }
