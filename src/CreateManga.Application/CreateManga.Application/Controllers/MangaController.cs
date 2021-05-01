@@ -8,13 +8,13 @@
     using CreateManga.Application.Data.Models;
     using CreateManga.Application.Models.Mangas.ViewModels;
     using CreateManga.Application.Models.Mangas.BindingModels;
-    using CreateManga.Application.Services;
+    using CreateManga.Application.Services.Interfaces;
 
     public class MangaController : Controller
     {
-        private readonly MangasService mangasService;
+        private readonly IMangasService mangasService;
 
-        public MangaController(MangasService mangasService)
+        public MangaController(IMangasService mangasService)
         {
             this.mangasService = mangasService;
         }

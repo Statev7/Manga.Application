@@ -8,8 +8,9 @@
     using CreateManga.Application.Data.Models;
     using CreateManga.Application.Models.Mangas.BindingModels;
     using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Services.Interfaces;
 
-    public class MangasService
+    public class MangasService : IMangasService
     {
         private readonly ApplicationDbContext dbContext;
 
