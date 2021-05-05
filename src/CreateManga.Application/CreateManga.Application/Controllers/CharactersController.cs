@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using CreateManga.Application.Models.Mangas.ViewModels;
@@ -21,6 +22,7 @@
             this.charactersService = charactersService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
@@ -29,6 +31,7 @@
             return this.View(characters);
         }
 
+        [Authorize]
         public IActionResult Details(int id)
         {
             DetailsCharactersViewModel character = this.charactersService.GetDetailsById(id);
@@ -42,6 +45,7 @@
             return this.View(character);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -58,6 +62,7 @@
             return this.View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCharacterBindingModel model)
@@ -72,6 +77,7 @@
             return this.RedirectToAction("index");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -91,6 +97,7 @@
             return this.View(character);
         }
 
+        [Authorize]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Update(UpdateCharactersBindingModel model)
@@ -105,6 +112,7 @@
             return this.RedirectToAction("index");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

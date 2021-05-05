@@ -4,14 +4,16 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using CreateManga.Application.Data.Constants;
+
     public class Manga
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [MinLength(2)]
-        [MaxLength(32)]
+        [MinLength(MangasConstants.MIN_LENGHT_NAME)]
+        [MaxLength(MangasConstants.MAX_LENGHT_NAME)]
         public string Name { get; set; }
 
         [Required]

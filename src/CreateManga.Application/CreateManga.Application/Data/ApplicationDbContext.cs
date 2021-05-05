@@ -1,11 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CreateManga.Application.Models.Characters.ViewModels;
-namespace CreateManga.Application.Data
+﻿namespace CreateManga.Application.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
@@ -50,7 +44,5 @@ namespace CreateManga.Application.Data
                 .WithMany(manga => manga.Characters)
                 .HasForeignKey(character => character.MangaId);
         }
-
-        public DbSet<CreateManga.Application.Models.Characters.ViewModels.DetailsCharactersViewModel> CharactersViewModel { get; set; }
     }
 }

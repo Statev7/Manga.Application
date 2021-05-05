@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using CreateManga.Application.Data.Models;
@@ -19,6 +20,7 @@
             this.mangasService = mangasService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
@@ -30,6 +32,7 @@
             return this.View(mangasViewModel);
         }
 
+        [Authorize]
         public IActionResult Details(int id)
         {
             MangaViewModel manga = this.mangasService.GetDetailsById(id);
@@ -43,12 +46,14 @@
             return this.View(manga);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
             return this.View();
         }
 
+        [Authorize]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Create(CreateMangaBindingModel model)
@@ -71,6 +76,7 @@
             return this.RedirectToAction("index");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -85,6 +91,7 @@
             return this.View(manga);
         }
 
+        [Authorize]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Update(UpdateMangaBiningModel model)
@@ -99,6 +106,7 @@
             return this.RedirectToAction("index");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
