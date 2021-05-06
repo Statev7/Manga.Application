@@ -1,0 +1,34 @@
+﻿@model IEnumerable<GetAllChaptersViewModel>
+
+@{
+    ViewData["Title"] = "All characters";
+}
+
+<h1>Characters</h1>
+<br />
+<div>
+    <a class="btn btn-outline-primary" asp-action="Create">Create Chapter</a>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (GetAllChaptersViewModel chapters in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => chapters.Title)
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
