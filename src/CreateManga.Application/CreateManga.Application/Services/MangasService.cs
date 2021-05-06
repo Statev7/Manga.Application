@@ -21,7 +21,7 @@
 
         public IEnumerable<MangaViewModel> GetAll()
         {
-            List<MangaViewModel> mangas = this.dbContext.Mangas
+            List<MangaViewModel> mangas = this.dbContext.Manga
                .Select(manga => new MangaViewModel
                {
                    Id = manga.Id,
@@ -37,7 +37,7 @@
 
         public MangaViewModel GetDetailsById(int id)
         {
-            MangaViewModel manga = this.dbContext.Mangas
+            MangaViewModel manga = this.dbContext.Manga
                 .Select(m => new MangaViewModel
                 {
                     Id = m.Id,
@@ -53,7 +53,7 @@
 
         public Manga GetByModelName(string modelName)
         {
-            Manga mangaFromDb = this.dbContext.Mangas
+            Manga mangaFromDb = this.dbContext.Manga
                 .SingleOrDefault(manga => manga.Name == modelName);
 
             return mangaFromDb;
@@ -68,13 +68,13 @@
             manga.EndDate = model.EndDate;
             manga.Description = model.Description;
 
-            await this.dbContext.Mangas.AddAsync(manga);
+            await this.dbContext.Manga.AddAsync(manga);
             await this.dbContext.SaveChangesAsync();
         }
 
         public UpdateMangaBiningModel UpdateById(int id)
         {
-            UpdateMangaBiningModel manga = this.dbContext.Mangas
+            UpdateMangaBiningModel manga = this.dbContext.Manga
                 .Select(m => new UpdateMangaBiningModel
                 {
                     Id = m.Id,
@@ -90,7 +90,7 @@
 
         public async Task UpdateAsync(UpdateMangaBiningModel model)
         {
-            Manga manga = this.dbContext.Mangas
+            Manga manga = this.dbContext.Manga
                 .Find(model.Id);
 
             bool isMangaNull = manga == null;
@@ -104,14 +104,14 @@
             manga.EndDate = model.EndDate;
             manga.Description = model.Description;
 
-            this.dbContext.Mangas.Update(manga);
+            this.dbContext.Manga.Update(manga);
             await this.dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
             Manga manga = new Manga();
-            manga = this.dbContext.Mangas
+            manga = this.dbContext.Manga
                    .Find(id);
 
             bool isMangaNull = manga == null;
@@ -120,7 +120,7 @@
                 return;
             }
 
-            this.dbContext.Mangas.Remove(manga);
+            this.dbContext.Manga.Remove(manga);
             await this.dbContext.SaveChangesAsync();
         }
     }

@@ -65,7 +65,7 @@
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateCharacterBindingModel model)
+        public async Task<IActionResult> Create(CreateCharactersBindingModel model)
         {
             if (this.ModelState.IsValid == false)
             {

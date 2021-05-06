@@ -19,6 +19,32 @@ namespace CreateManga.Application.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CreateManga.Application.Data.Models.Chapter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MangaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Story")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MangaId");
+
+                    b.ToTable("Chapter");
+                });
+
             modelBuilder.Entity("CreateManga.Application.Data.Models.Character", b =>
                 {
                     b.Property<int>("Id")
@@ -49,7 +75,7 @@ namespace CreateManga.Application.Data.Migrations
 
                     b.HasIndex("MangaId");
 
-                    b.ToTable("Characters");
+                    b.ToTable("Character");
                 });
 
             modelBuilder.Entity("CreateManga.Application.Data.Models.Manga", b =>
@@ -79,7 +105,7 @@ namespace CreateManga.Application.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Mangas");
+                    b.ToTable("Manga");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -282,6 +308,17 @@ namespace CreateManga.Application.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CreateManga.Application.Data.Models.Chapter", b =>
+                {
+                    b.HasOne("CreateManga.Application.Data.Models.Manga", "Manga")
+                        .WithMany("Chapters")
+                        .HasForeignKey("MangaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Manga");
+                });
+
             modelBuilder.Entity("CreateManga.Application.Data.Models.Character", b =>
                 {
                     b.HasOne("CreateManga.Application.Data.Models.Manga", "Manga")
@@ -346,6 +383,8 @@ namespace CreateManga.Application.Data.Migrations
 
             modelBuilder.Entity("CreateManga.Application.Data.Models.Manga", b =>
                 {
+                    b.Navigation("Chapters");
+
                     b.Navigation("Characters");
                 });
 #pragma warning restore 612, 618

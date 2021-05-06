@@ -15,7 +15,7 @@
 
         IEnumerable<MangasIdNameViewModel> GetByName();
 
-        Task CreateAsync(CreateCharacterBindingModel model);
+        Task CreateAsync(CreateCharactersBindingModel model);
 
         UpdateCharactersBindingModel UpdateById(int id);
 

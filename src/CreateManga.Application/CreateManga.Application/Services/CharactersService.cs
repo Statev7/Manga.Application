@@ -22,7 +22,7 @@
 
         public IEnumerable<GetAllCharactersViewModel> GetAll()
         {
-            IEnumerable<GetAllCharactersViewModel> characters = this.dbContext.Characters
+            IEnumerable<GetAllCharactersViewModel> characters = this.dbContext.Character
                .Select(characters => new GetAllCharactersViewModel
                {
                    Id = characters.Id,
@@ -35,7 +35,7 @@
 
         public DetailsCharactersViewModel GetDetailsById(int id)
         {
-            DetailsCharactersViewModel character = this.dbContext.Characters
+            DetailsCharactersViewModel character = this.dbContext.Character
                .Select(character => new DetailsCharactersViewModel
                {
                    Id = character.Id,
@@ -53,7 +53,7 @@
 
         public IEnumerable<MangasIdNameViewModel> GetByName()
         {
-            IEnumerable<MangasIdNameViewModel> mangas = this.dbContext.Mangas
+            IEnumerable<MangasIdNameViewModel> mangas = this.dbContext.Manga
                 .Select(mangas => new MangasIdNameViewModel
                 {
                     Id = mangas.Id,
@@ -65,7 +65,7 @@
             return mangas;
         }
 
-        public async Task CreateAsync(CreateCharacterBindingModel model)
+        public async Task CreateAsync(CreateCharactersBindingModel model)
         {
             Character character = new Character();
             character.Name = model.Name;
@@ -74,14 +74,13 @@
             character.Ability = model.Ability;
             character.MangaId = model.MangaId;
 
-            await this.dbContext.Characters.AddAsync(character);
+            await this.dbContext.Character.AddAsync(character);
             await this.dbContext.SaveChangesAsync();
-
         }
 
         public UpdateCharactersBindingModel UpdateById(int id)
         {
-            UpdateCharactersBindingModel character = this.dbContext.Characters
+            UpdateCharactersBindingModel character = this.dbContext.Character
                .Select(character => new UpdateCharactersBindingModel
                {
                    Id = character.Id,
@@ -98,7 +97,7 @@
 
         public async Task UpdateAsync(UpdateCharactersBindingModel model)
         {
-            Character character = this.dbContext.Characters
+            Character character = this.dbContext.Character
                 .Find(model.Id);
 
             bool isCharacterNull = character == null;
@@ -113,14 +112,14 @@
             character.Ability = model.Ability;
             character.MangaId = model.MangaId;
 
-            this.dbContext.Characters.Update(character);
+            this.dbContext.Character.Update(character);
             await this.dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
             Character character = new Character();
-            character = this.dbContext.Characters
+            character = this.dbContext.Character
                    .Find(id);
 
             bool isCharacterNull = character == null;
@@ -129,7 +128,7 @@
                 return;
             }
 
-            this.dbContext.Characters.Remove(character);
+            this.dbContext.Character.Remove(character);
             await this.dbContext.SaveChangesAsync();
         }
 

@@ -1,13 +1,11 @@
 ﻿namespace CreateManga.Application.Controllers
 {
-    using CreateManga.Application.Models;
+    using System.Diagnostics;
+
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading.Tasks;
+
+    using CreateManga.Application.Models;
 
     public class HomeController : Controller
     {
