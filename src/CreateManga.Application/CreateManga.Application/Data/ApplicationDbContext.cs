@@ -12,9 +12,11 @@
         {
         }
 
-        public DbSet<Manga> Mangas { get; set; }
+        public DbSet<Manga> Manga { get; set; }
 
-        public DbSet<Character> Characters { get; set; }
+        public DbSet<Character> Character { get; set; }
+
+        public DbSet<Chapter> Chapter { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,6 +45,13 @@
                 .HasOne(character => character.Manga)
                 .WithMany(manga => manga.Characters)
                 .HasForeignKey(character => character.MangaId);
+
+            builder
+                .Entity<Chapter>()
+                .HasOne(chapter => chapter.Manga)
+                .WithMany(manga => manga.Chapters)
+                .HasForeignKey(chapter => chapter.MangaId);
+
         }
     }
 }
