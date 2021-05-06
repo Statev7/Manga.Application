@@ -25,5 +25,7 @@
         public string Description { get; set; }
 
         public virtual ICollection<Character> Characters { get; set; }
+
+        public virtual ICollection<Chapter> Chapters { get; set; }
     }
 }
