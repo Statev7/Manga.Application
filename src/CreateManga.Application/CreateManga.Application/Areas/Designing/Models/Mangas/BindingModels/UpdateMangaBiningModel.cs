@@ -1,4 +1,4 @@
-﻿namespace CreateManga.Application.Models.Mangas.BindingModels
+﻿namespace CreateManga.Application.Areas.Designing.Mangas.BindingModels
 {
     using System;
     using System.ComponentModel;

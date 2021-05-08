@@ -1,14 +1,11 @@
-﻿namespace CreateManga.Application.Models.Characters.BindingModels
+﻿namespace CreateManga.Application.Areas.Designing.Characters.BindingModels
 {
+    using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    public class UpdateCharactersBindingModel
+    public class CreateCharactersBindingModel
     {
-        [Required]
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [MinLength(2)]
         [MaxLength(64)]

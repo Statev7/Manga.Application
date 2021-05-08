@@ -1,4 +1,4 @@
-﻿namespace CreateManga.Application.Controllers
+﻿namespace CreateManga.Application.Area.Designing.Controllers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -10,8 +10,9 @@
     using CreateManga.Application.Models.Mangas.ViewModels;
     using CreateManga.Application.Models.Mangas.BindingModels;
     using CreateManga.Application.Services.Interfaces;
+    using CreateManga.Application.Areas.Designing.Controllers;
 
-    public class MangaController : Controller
+    public class MangaController : DesigningController
     {
         private readonly IMangasService mangasService;
 

@@ -1,4 +1,4 @@
-﻿namespace CreateManga.Application.Models.Characters.ViewModels
+﻿namespace CreateManga.Application.Areas.Designing.Characters.ViewModels
 {
     public class GetAllCharactersViewModel
     {

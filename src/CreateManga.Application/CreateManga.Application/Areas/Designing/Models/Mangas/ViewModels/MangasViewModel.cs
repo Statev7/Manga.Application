@@ -1,4 +1,4 @@
-﻿namespace CreateManga.Application.Models.Mangas.ViewModels
+﻿namespace CreateManga.Application.Areas.Designing.Mangas.ViewModels
 {
     using System;
     using System.Collections.Generic;

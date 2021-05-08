@@ -1,6 +1,5 @@
-﻿namespace CreateManga.Application.Controllers
+﻿namespace CreateManga.Application.Area.Designing.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -8,48 +7,49 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using CreateManga.Application.Models.Mangas.ViewModels;
-    using CreateManga.Application.Models.Characters.BindingModels;
-    using CreateManga.Application.Models.Characters.ViewModels;
+    using CreateManga.Application.Models.Chapters.ViewModels;
     using CreateManga.Application.Services.Interfaces;
+    using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Models.Chapters.BindingModels;
+    using CreateManga.Application.Areas.Designing.Controllers;
 
-    public class CharactersController : Controller
+    public class ChaptersController : DesigningController
     {
-        private readonly ICharactersService charactersService;
+        private readonly IChaptersService chapterService;
 
-        public CharactersController(ICharactersService charactersService)
+        public ChaptersController(IChaptersService chapterService)
         {
-            this.charactersService = charactersService;
+            this.chapterService = chapterService;
         }
 
         [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<GetAllCharactersViewModel> characters = this.charactersService.GetAll();
+            IEnumerable<GetAllChaptersViewModel> chapter = this.chapterService.GetAll();
 
-            return this.View(characters);
+            return this.View(chapter);
         }
 
         [Authorize]
         public IActionResult Details(int id)
         {
-            DetailsCharactersViewModel character = this.charactersService.GetDetailsById(id);
+            DetailsChaptersViewModel chapter = this.chapterService.GetDetailsById(id);
 
-            bool isCharacterNull = character == null;
+            bool isCharacterNull = chapter == null;
             if (isCharacterNull)
             {
                 return this.RedirectToAction("index");
             }
 
-            return this.View(character);
+            return this.View(chapter);
         }
 
         [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
-            IEnumerable<MangasIdNameViewModel> mangas = this.charactersService.GetByName();
+            IEnumerable<MangasIdNameViewModel> mangas = this.chapterService.GetByName();
 
             bool areMangasEmpty = mangas.Count() == 0;
             if (areMangasEmpty)
@@ -65,14 +65,14 @@
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateCharactersBindingModel model)
+        public async Task<IActionResult> Create(CreateChaptersBindingModel model)
         {
             if (this.ModelState.IsValid == false)
             {
                 return this.RedirectToAction("create");
             }
 
-            await this.charactersService.CreateAsync(model);
+            await this.chapterService.CreateAsync(model);
 
             return this.RedirectToAction("index");
         }
@@ -81,11 +81,11 @@
         [HttpGet]
         public IActionResult Update(int id)
         {
-            UpdateCharactersBindingModel character = this.charactersService.UpdateById(id);
+            UpdateChaptersBindingModel chapter = this.chapterService.UpdateById(id);
 
-            IEnumerable<MangasIdNameViewModel> mangas = this.charactersService.GetByName();
+            IEnumerable<MangasIdNameViewModel> mangas = this.chapterService.GetByName();
 
-            bool isCharacterNull = character == null;
+            bool isCharacterNull = chapter == null;
             bool areMangasEmpty = mangas.Count() == 0;
             if (isCharacterNull || areMangasEmpty)
             {
@@ -94,20 +94,20 @@
 
             ViewBag.mangas = mangas;
 
-            return this.View(character);
+            return this.View(chapter);
         }
 
         [Authorize]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Update(UpdateCharactersBindingModel model)
+        public async Task<IActionResult> Update(UpdateChaptersBindingModel model)
         {
             if (this.ModelState.IsValid == false)
             {
                 return this.View(model);
             }
 
-            await this.charactersService.UpdateAsync(model);
+            await this.chapterService.UpdateAsync(model);
 
             return this.RedirectToAction("index");
         }
@@ -116,7 +116,7 @@
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            await this.charactersService.DeleteAsync(id);
+            await this.chapterService.DeleteAsync(id);
 
             return this.RedirectToAction("index");
         }

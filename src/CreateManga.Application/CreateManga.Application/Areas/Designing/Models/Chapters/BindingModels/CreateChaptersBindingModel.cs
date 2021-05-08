@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CreateManga.Application.Models.Chapters.BindingModels
+﻿namespace CreateManga.Application.Areas.Designing.Chapters.BindingModels
 {
-    public class UpdateChaptersBindingModel
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    public class CreateChaptersBindingModel
     {
-        [Required]
         [Key]
         public int Id { get; set; }
 

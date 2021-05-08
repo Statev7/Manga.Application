@@ -1,4 +1,7 @@
-﻿namespace CreateManga.Application.Data
+﻿using Microsoft.EntityFrameworkCore;
+using CreateManga.Application.Models.Chapters.ViewModels;
+using CreateManga.Application.Models.Chapters.BindingModels;
+namespace CreateManga.Application.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
@@ -53,5 +56,9 @@
                 .HasForeignKey(chapter => chapter.MangaId);
 
         }
+
+        public DbSet<CreateManga.Application.Models.Chapters.ViewModels.DetailsChaptersViewModel> DetailsChaptersViewModel { get; set; }
+
+        public DbSet<CreateManga.Application.Models.Chapters.BindingModels.UpdateChaptersBindingModel> UpdateChaptersBindingModel { get; set; }
     }
 }
