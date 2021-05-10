@@ -6,8 +6,8 @@
 
     using CreateManga.Application.Data;
     using CreateManga.Application.Data.Models;
-    using CreateManga.Application.Models.Mangas.BindingModels;
-    using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Areas.Designing.Mangas.BindingModels;
+    using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
     using CreateManga.Application.Services.Interfaces;
 
     public class MangasService : IMangasService
@@ -103,7 +103,7 @@
             bool isMangaNull = manga == null;
             if (isMangaNull)
             {
-                return ;
+                return;
             }
 
             manga.Name = model.Name;

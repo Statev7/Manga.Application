@@ -7,9 +7,9 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using CreateManga.Application.Models.Mangas.ViewModels;
-    using CreateManga.Application.Models.Characters.BindingModels;
-    using CreateManga.Application.Models.Characters.ViewModels;
+    using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
+    using CreateManga.Application.Areas.Designing.Characters.BindingModels;
+    using CreateManga.Application.Areas.Designing.Characters.ViewModels;
     using CreateManga.Application.Services.Interfaces;
     using CreateManga.Application.Areas.Designing.Controllers;
 

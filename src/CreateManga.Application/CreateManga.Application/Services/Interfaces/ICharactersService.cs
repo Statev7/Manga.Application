@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using CreateManga.Application.Models.Characters.BindingModels;
-    using CreateManga.Application.Models.Characters.ViewModels;
-    using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Areas.Designing.Characters.BindingModels;
+    using CreateManga.Application.Areas.Designing.Characters.ViewModels;
+    using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
 
     public interface ICharactersService
     {

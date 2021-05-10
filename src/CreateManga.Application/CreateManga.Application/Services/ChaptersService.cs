@@ -7,9 +7,9 @@
 
     using CreateManga.Application.Data;
     using CreateManga.Application.Data.Models;
-    using CreateManga.Application.Models.Chapters.BindingModels;
-    using CreateManga.Application.Models.Chapters.ViewModels;
-    using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Areas.Designing.Chapters.BindingModels;
+    using CreateManga.Application.Areas.Designing.Chapters.ViewModels;
+    using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
     using CreateManga.Application.Services.Interfaces;
 
     public class ChaptersService : IChaptersService

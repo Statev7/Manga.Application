@@ -4,8 +4,8 @@
     using System.Threading.Tasks;
 
     using CreateManga.Application.Data.Models;
-    using CreateManga.Application.Models.Mangas.BindingModels;
-    using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Areas.Designing.Mangas.BindingModels;
+    using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
 
     public interface IMangasService
     {

@@ -7,10 +7,10 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using CreateManga.Application.Models.Chapters.ViewModels;
+    using CreateManga.Application.Areas.Designing.Chapters.ViewModels;
     using CreateManga.Application.Services.Interfaces;
-    using CreateManga.Application.Models.Mangas.ViewModels;
-    using CreateManga.Application.Models.Chapters.BindingModels;
+    using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
+    using CreateManga.Application.Areas.Designing.Chapters.BindingModels;
     using CreateManga.Application.Areas.Designing.Controllers;
 
     public class ChaptersController : DesigningController

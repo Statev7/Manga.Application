@@ -5,9 +5,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using CreateManga.Application.Models.Chapters.BindingModels;
-    using CreateManga.Application.Models.Chapters.ViewModels;
-    using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Areas.Designing.Chapters.BindingModels;
+    using CreateManga.Application.Areas.Designing.Chapters.ViewModels;
+    using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
 
     public interface IChaptersService
     {

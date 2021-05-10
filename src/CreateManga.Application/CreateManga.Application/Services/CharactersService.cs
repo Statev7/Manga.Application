@@ -6,9 +6,9 @@
 
     using CreateManga.Application.Data;
     using CreateManga.Application.Data.Models;
-    using CreateManga.Application.Models.Characters.BindingModels;
-    using CreateManga.Application.Models.Characters.ViewModels;
-    using CreateManga.Application.Models.Mangas.ViewModels;
+    using CreateManga.Application.Areas.Designing.Characters.BindingModels;
+    using CreateManga.Application.Areas.Designing.Characters.ViewModels;
+    using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
     using CreateManga.Application.Services.Interfaces;
 
     public class CharactersService : ICharactersService
