@@ -4,19 +4,25 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Hosting;
+
     using CreateManga.Application.Data;
     using CreateManga.Application.Data.Models;
     using CreateManga.Application.Areas.Designing.Mangas.BindingModels;
     using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
     using CreateManga.Application.Services.Interfaces;
+    using System.IO;
+    using System;
 
     public class MangasService : IMangasService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly IWebHostEnvironment hostEnvironment;
 
-        public MangasService(ApplicationDbContext dbContext)
+        public MangasService(ApplicationDbContext dbContext, IWebHostEnvironment hostEnvironment)
         {
             this.dbContext = dbContext;
+            this.hostEnvironment = hostEnvironment;
         }
 
         public IEnumerable<MangaViewModel> GetAll()
@@ -29,6 +35,7 @@
                    StartDate = manga.StartDate,
                    EndDate = manga.EndDate,
                    Description = manga.Description,
+                   ImageName = manga.ImageName,
                })
                .ToList();
 
@@ -45,6 +52,7 @@
                     StartDate = m.StartDate,
                     EndDate = m.EndDate,
                     Description = m.Description,
+                    ImageName = m.ImageName,
                 })
                 .SingleOrDefault(m => m.Id == id);
 
@@ -74,6 +82,18 @@
             manga.StartDate = model.StartDate;
             manga.EndDate = model.EndDate;
             manga.Description = model.Description;
+            manga.ImageFile = model.ImageFile;
+
+            string wwwRootPath = hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
+            string exension = Path.GetExtension(manga.ImageFile.FileName);
+            manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
+            string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await manga.ImageFile.CopyToAsync(fileStream);
+            }
 
             await this.dbContext.Manga.AddAsync(manga);
             await this.dbContext.SaveChangesAsync();
@@ -89,6 +109,7 @@
                     StartDate = m.StartDate,
                     EndDate = m.EndDate,
                     Description = m.Description,
+                    ImageName = m.ImageName,
                 })
                 .SingleOrDefault(m => m.Id == id);
 
@@ -110,9 +131,22 @@
             manga.StartDate = model.StartDate;
             manga.EndDate = model.EndDate;
             manga.Description = model.Description;
+            manga.ImageFile = model.ImageFile;
+
+            string wwwRootPath = hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
+            string exension = Path.GetExtension(manga.ImageFile.FileName);
+            manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
+            string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await manga.ImageFile.CopyToAsync(fileStream);
+            }
 
             this.dbContext.Manga.Update(manga);
             await this.dbContext.SaveChangesAsync();
+
         }
 
         public async Task DeleteAsync(int id)
