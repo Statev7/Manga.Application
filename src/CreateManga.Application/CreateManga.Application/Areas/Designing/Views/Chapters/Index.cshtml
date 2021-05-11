@@ -22,18 +22,16 @@
     <tbody>
         @foreach (GetAllChaptersViewModel chapters in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => chapters.Title)
-            </td>
-            <td>
-            <td>
-                @Html.ActionLink("Edit", "Update", new { id = chapters.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = chapters.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = chapters.Id })
-            </td>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => chapters.Title)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Update", new { id = chapters.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = chapters.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = chapters.Id })
+                </td>
+            </tr>
         }
     </tbody>
 </table>
