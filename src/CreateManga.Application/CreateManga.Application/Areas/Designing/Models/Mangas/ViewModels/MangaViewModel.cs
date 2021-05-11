@@ -3,6 +3,8 @@
     using System;
     using System.ComponentModel;
 
+    using Microsoft.AspNetCore.Http;
+
     public class MangaViewModel
     {
         public int Id { get; set; }
@@ -17,5 +19,10 @@
         public DateTime? EndDate { get; set; }
 
         public string Description { get; set; }
+
+        [DisplayName("Upload image")]
+        public string ImageName { get; set; }
+
+        public IFormFile ImageFile { get; set; }
     }
 }

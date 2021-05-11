@@ -3,6 +3,9 @@
     using System;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    using Microsoft.AspNetCore.Http;
 
     public class UpdateMangaBiningModel
     {
@@ -22,6 +25,13 @@
         public DateTime? EndDate { get; set; }
 
         [Required]
+        [MaxLength(32)]
         public string Description { get; set; }
+
+        public string ImageName { get; set; }
+
+        [DisplayName("Upload image")]
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
     }
 }
