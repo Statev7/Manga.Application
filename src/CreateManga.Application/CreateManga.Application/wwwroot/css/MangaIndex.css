@@ -1,0 +1,9 @@
+﻿.anime-form {
+    display: inline-block;
+    margin: 2% 0% 0% 2%;
+    width: 300px;
+    transition: all 0.4s;
+}
+.anime-form:hover {
+    transform: scale(1.1);
+}
