@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    using Microsoft.AspNetCore.Http;
 
     using CreateManga.Application.Data.Constants;
 
@@ -22,7 +25,13 @@
         public DateTime? EndDate { get; set; }
 
         [Required]
+        [MaxLength(MangasConstants.MAX_DESCRIPTION_LENGHT)]
         public string Description { get; set; }
+
+        public string ImageName { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
 
         public virtual ICollection<Character> Characters { get; set; }
 
