@@ -35,23 +35,7 @@
         {
             base.OnModelCreating(builder);
 
-            builder
-                .Entity<Manga>()
-                .HasIndex(m => m.Name)
-                .IsUnique();
-
-            builder
-                .Entity<Character>()
-                .HasOne(character => character.Manga)
-                .WithMany(manga => manga.Characters)
-                .HasForeignKey(character => character.MangaId);
-
-            builder
-                .Entity<Chapter>()
-                .HasOne(chapter => chapter.Manga)
-                .WithMany(manga => manga.Chapters)
-                .HasForeignKey(chapter => chapter.MangaId);
-
+            builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
         }
 
     }
