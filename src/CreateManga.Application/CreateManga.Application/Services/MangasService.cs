@@ -82,17 +82,21 @@
             manga.StartDate = model.StartDate;
             manga.EndDate = model.EndDate;
             manga.Description = model.Description;
+            manga.ImageName = model.ImageName;
             manga.ImageFile = model.ImageFile;
 
-            string wwwRootPath = hostEnvironment.WebRootPath;
-            string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
-            string exension = Path.GetExtension(manga.ImageFile.FileName);
-            manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
-            string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
-
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            if (model.ImageFile != null)
             {
-                await manga.ImageFile.CopyToAsync(fileStream);
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
+                string exension = Path.GetExtension(manga.ImageFile.FileName);
+                manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
+                string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await manga.ImageFile.CopyToAsync(fileStream);
+                }
             }
 
             await this.dbContext.Manga.AddAsync(manga);
@@ -131,22 +135,25 @@
             manga.StartDate = model.StartDate;
             manga.EndDate = model.EndDate;
             manga.Description = model.Description;
+            manga.ImageName = model.ImageName;
             manga.ImageFile = model.ImageFile;
 
-            string wwwRootPath = hostEnvironment.WebRootPath;
-            string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
-            string exension = Path.GetExtension(manga.ImageFile.FileName);
-            manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
-            string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
-
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            if (model.ImageFile != null)
             {
-                await manga.ImageFile.CopyToAsync(fileStream);
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
+                string exension = Path.GetExtension(manga.ImageFile.FileName);
+                manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
+                string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await manga.ImageFile.CopyToAsync(fileStream);
+                }
             }
 
             this.dbContext.Manga.Update(manga);
             await this.dbContext.SaveChangesAsync();
-
         }
 
         public async Task DeleteAsync(int id)
