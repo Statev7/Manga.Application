@@ -3,6 +3,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
 
+    using CreateManga.Application.Constants.RolesConstants;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.Services;
@@ -54,13 +56,25 @@
             public string ConfirmPassword { get; set; }
         }
 
-        public void OnGet(string returnUrl = null)
+        public IActionResult OnGet(string returnUrl = null)
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.Redirect("/");
+            }
+
             ReturnUrl = returnUrl;
+
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.Redirect("/");
+            }
+
             returnUrl ??= Url.Content("~/");
 
             if (ModelState.IsValid)
@@ -72,6 +86,7 @@
                     _logger.LogInformation("User created a new account with password.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _userManager.AddToRoleAsync(user, RolesConstants.USER_ROLE_NAME);
                     return LocalRedirect(returnUrl);
                 }
 
