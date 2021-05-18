@@ -11,6 +11,7 @@
     using CreateManga.Application.Areas.Designing.Mangas.BindingModels;
     using CreateManga.Application.Services.Interfaces;
     using CreateManga.Application.Areas.Designing.Controllers;
+    using CreateManga.Application.Constants.RolesConstants;
 
     public class MangaController : DesigningController
     {
@@ -47,14 +48,14 @@
             return this.View(manga);
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR)]
         [HttpGet]
         public IActionResult Create()
         {
             return this.View();
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR)]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Create(CreateMangaBindingModel model)
@@ -77,7 +78,7 @@
             return this.RedirectToAction("index");
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR_OR_EDITOR)]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -92,7 +93,7 @@
             return this.View(manga);
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR_OR_EDITOR)]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Update(UpdateMangaBiningModel model)
@@ -107,7 +108,7 @@
             return this.RedirectToAction("index");
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR)]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

@@ -12,6 +12,7 @@
     using CreateManga.Application.Areas.Designing.Characters.ViewModels;
     using CreateManga.Application.Services.Interfaces;
     using CreateManga.Application.Areas.Designing.Controllers;
+    using CreateManga.Application.Constants.RolesConstants;
 
     public class CharactersController : DesigningController
     {
@@ -32,6 +33,7 @@
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult Details(int id)
         {
             DetailsCharactersViewModel character = this.charactersService.GetDetailsById(id);
@@ -45,7 +47,7 @@
             return this.View(character);
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR)]
         [HttpGet]
         public IActionResult Create()
         {
@@ -62,7 +64,7 @@
             return this.View();
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCharactersBindingModel model)
@@ -77,7 +79,7 @@
             return this.RedirectToAction("index");
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR_OR_EDITOR)]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -97,7 +99,7 @@
             return this.View(character);
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR_OR_EDITOR)]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Update(UpdateCharactersBindingModel model)
@@ -112,7 +114,7 @@
             return this.RedirectToAction("index");
         }
 
-        [Authorize]
+        [Authorize(Roles = RolesConstants.ADMIN_OR_AUTHOR)]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

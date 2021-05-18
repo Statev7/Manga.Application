@@ -2,6 +2,15 @@
 
 @{
     ViewData["Title"] = "All mangas";
+
+    bool isHaveUpdatePermissions =
+        this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
+        this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME) ||
+        this.User.IsInRole(RolesConstants.EDITOR_ROLE_NAME);
+
+    bool isHaveCreateAndDeletePermissions =
+        this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
+        this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
 
 <head>
@@ -10,10 +19,14 @@
 <h1>Manga index view</h1>
 <br />
 <div>
-    <div style="border-bottom: 1px solid white">
-        <a class="btn btn-outline-danger mb-2" asp-action="Create">Create new Manga</a>
-    </div>
-    <div class="text-center">
+    @if (isHaveCreateAndDeletePermissions)
+    {
+        <div>
+            <a class="btn btn-outline-danger mb-2" asp-action="Create">Create new Manga</a>
+        </div>
+    }
+
+    <div class="text-center" style="border-top: 1px solid white">
         @{
             foreach (var manga in Model.Mangas)
             {
@@ -39,14 +52,20 @@
                                 <a asp-controller="Manga" asp-action="Details" asp-route-id="@manga.Id">
                                     <span>Details</span>
                                 </a>
-                                |
-                                <a asp-controller="Manga" asp-action="Update" asp-route-id="@manga.Id">
-                                    Update
-                                </a>
-                                |
-                                <a asp-controller="Manga" asp-action="Delete" asp-route-id="@manga.Id">
-                                    Delete
-                                </a>
+                                @if (isHaveUpdatePermissions)
+                                {
+                                    <span>|</span>
+                                    <a asp-controller="Manga" asp-action="Update" asp-route-id="@manga.Id">
+                                        Update
+                                    </a>
+                                }
+                                @if (isHaveCreateAndDeletePermissions)
+                                {
+                                    <span>|</span>
+                                    <a asp-controller="Manga" asp-action="Delete" asp-route-id="@manga.Id">
+                                        Delete
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>

@@ -2,13 +2,25 @@
 
 @{
     ViewData["Title"] = "All characters";
+
+    bool isHaveUpdatePermissions =
+    this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
+    this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME) ||
+    this.User.IsInRole(RolesConstants.EDITOR_ROLE_NAME);
+
+    bool isHaveCreateAndDeletePermissions =
+        this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
+        this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
 
 <h1>Characters</h1>
 <br />
-<div>
-    <a class="btn btn-outline-primary" asp-action="Create">Create Chapter</a>
-</div>
+@if (isHaveCreateAndDeletePermissions)
+{
+    <div>
+        <a class="btn btn-outline-danger" asp-action="Create">Create Chapter</a>
+    </div>
+}
 <br />
 <table class="table text-white">
     <thead>
@@ -27,9 +39,18 @@
                     @Html.DisplayFor(modelItem => chapters.Title)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Update", new { id = chapters.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = chapters.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = chapters.Id })
+                    @Html.ActionLink("Details", "Details", new { id = chapters.Id })
+
+                    @if (isHaveUpdatePermissions)
+                    {
+                        <span>|</span>
+                        @Html.ActionLink("Edit", "Update", new { id = chapters.Id })
+                    }
+                    @if (isHaveCreateAndDeletePermissions)
+                    {
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { id = chapters.Id })
+                    }
                 </td>
             </tr>
         }
