@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] | CreateManga</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/toastr/toastr.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="text-white" style="background-color: #191919">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-danger border-bottom box-shadow mb-3">
+    <header id="header">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
                 <img src="~/Img/Manga-Logo.png" class="img-fluid" alt="Logo" style="margin-right: 15px" />
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CreateManga</a>
@@ -51,8 +52,27 @@
             &copy; 2021 - CreateManga - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <script type="text/javascript">
+        document.querySelector('body').onload = function checkIfNotificationMessageIsGiven() {
+            if ('@this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION]') {
+                toastr.success('@this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION]');
+            }
+            if ('@this.TempData[NotificationsConstants.ERROR_NOTIFICATION]') {
+                toastr.error('@this.TempData[NotificationsConstants.ERROR_NOTIFICATION]');
+            }
+            if ('@this.TempData[NotificationsConstants.WARNING_NOTIFICATION]') {
+                toastr.warning('@this.TempData[NotificationsConstants.WARNING_NOTIFICATION]');
+            }
+            if ('@this.TempData[NotificationsConstants.INFO_NNOTIFICATION]') {
+                toastr.info('@this.TempData[NotificationsConstants.INFO_NNOTIFICATION]');
+            }
+        };
+    </script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
