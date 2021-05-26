@@ -18,6 +18,7 @@ namespace CreateManga.Application
     using CreateManga.Application.Data;
     using CreateManga.Application.Services;
     using CreateManga.Application.Services.Interfaces;
+    using CreateManga.Application.Data.Seeders;
 
     public class Startup
     {
@@ -58,6 +59,9 @@ namespace CreateManga.Application
                     var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
                     dbContext.Database.Migrate();
+
+                    ApplicationDbContextSeeder seeder = new ApplicationDbContextSeeder(serviceScope.ServiceProvider);
+                    seeder.SeedDatabaseAsync().GetAwaiter().GetResult();
                 }
             }
             else
