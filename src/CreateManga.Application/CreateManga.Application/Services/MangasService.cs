@@ -69,13 +69,6 @@
 
         public async Task CreateAsync(CreateMangaBindingModel model)
         {
-            //TODO Notification 
-
-            if (model.StartDate > model.EndDate)
-            {
-                return;
-            }
-
             Manga manga = new Manga();
 
             manga.Name = model.Name;

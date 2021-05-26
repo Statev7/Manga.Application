@@ -1,5 +1,6 @@
 ﻿namespace CreateManga.Application.Area.Designing.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@
     using CreateManga.Application.Services.Interfaces;
     using CreateManga.Application.Areas.Designing.Controllers;
     using CreateManga.Application.Constants.RolesConstants;
+    using CreateManga.Application.Constants.NotificationsConstants;
 
     public class MangaController : DesigningController
     {
@@ -63,6 +65,12 @@
             if (this.ModelState.IsValid == false)
             {
                 return this.View("create", model);
+            }
+
+            if (model.StartDate > model.EndDate)
+            {
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.FAILED_TO_SET_DATE;
+                return this.RedirectToAction("index");
             }
 
             Manga mangaFromDb = this.mangasService.GetByModelName(model.Name);
