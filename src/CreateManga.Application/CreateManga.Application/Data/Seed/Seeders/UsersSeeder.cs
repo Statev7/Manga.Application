@@ -8,29 +8,30 @@
 
     using CreateManga.Application.Data.Seed.Seeders.Interfaces;
     using CreateManga.Application.Constants.RolesConstants;
+    using CreateManga.Application.Data.Models;
 
     public class UsersSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            UserManager<IdentityUser> userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            IdentityUser user = new IdentityUser
+            ApplicationUser user = new ApplicationUser
             {
                 UserName = UsersConstants.USER_USERNAME,
                 Email = UsersConstants.USER_EMAIL,
             };
-            IdentityUser editor = new IdentityUser
+            ApplicationUser editor = new ApplicationUser
             {
                 UserName = UsersConstants.EDITOR_USERNAME,
                 Email = UsersConstants.EDITOR_EMAIL,
             };
-            IdentityUser author = new IdentityUser
+            ApplicationUser author = new ApplicationUser
             {
                 UserName = UsersConstants.AUTHOR_USERNAME,
                 Email = UsersConstants.AUTHOR_EMAIL,
             };
-            IdentityUser admin = new IdentityUser
+            ApplicationUser admin = new ApplicationUser
             {
                 UserName = UsersConstants.ADMIN_USERNAME,
                 Email = UsersConstants.ADMIN_EMAIL,

@@ -5,7 +5,7 @@
 
     using CreateManga.Application.Data.Models;
 
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -17,6 +17,8 @@
         public DbSet<Character> Character { get; set; }
 
         public DbSet<Chapter> Chapter { get; set; }
+
+        public DbSet<MangaUser> MangasUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

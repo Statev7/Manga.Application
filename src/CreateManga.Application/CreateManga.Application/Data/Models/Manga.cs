@@ -11,6 +11,13 @@
 
     public class Manga
     {
+        public Manga()
+        {
+            this.Characters = new HashSet<Character>();
+            this.Chapters = new HashSet<Chapter>();
+            this.MangaUsers = new HashSet<MangaUser>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -28,6 +35,8 @@
         [MaxLength(MangasConstants.MAX_DESCRIPTION_LENGHT)]
         public string Description { get; set; }
 
+        public int Votes { get; set; }
+
         public string ImageName { get; set; }
 
         [NotMapped]
@@ -36,5 +45,7 @@
         public virtual ICollection<Character> Characters { get; set; }
 
         public virtual ICollection<Chapter> Chapters { get; set; }
+
+        public virtual ICollection<MangaUser> MangaUsers { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace CreateManga.Application
     using CreateManga.Application.Services;
     using CreateManga.Application.Services.Interfaces;
     using CreateManga.Application.Data.Seeders;
+    using CreateManga.Application.Data.Models;
 
     public class Startup
     {
@@ -37,7 +38,7 @@ namespace CreateManga.Application
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(IdentityOptionsProvider.GetIdentityOptions)
+            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
