@@ -24,5 +24,8 @@
         public string ImageName { get; set; }
 
         public IFormFile ImageFile { get; set; }
+
+        public bool CurrentUserIsVoted { get; set; }
+
     }
 }

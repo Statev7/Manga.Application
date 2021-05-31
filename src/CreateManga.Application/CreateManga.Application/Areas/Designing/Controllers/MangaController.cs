@@ -19,23 +19,26 @@
     public class MangaController : DesigningController
     {
         private readonly IMangasService mangasService;
-        private readonly IMangasUsersService mangasUsers;
+        private readonly IMangasUsersService mangasUsersService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public MangaController(IMangasService mangasService, IMangasUsersService mangasUsers, UserManager<ApplicationUser> userManager)
         {
             this.mangasService = mangasService;
             this.userManager = userManager;
-            this.mangasUsers = mangasUsers;
+            this.mangasUsersService = mangasUsers;
         }
 
         [Authorize]
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<MangaViewModel> mangas = this.mangasService.GetAll();
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+
+            IEnumerable<MangaViewModel> mangas = this.mangasService.GetAll(currentUser.Id);
 
             MangasViewModel mangasViewModel = new MangasViewModel();
+
             mangasViewModel.Mangas = mangas;
             
             return this.View(mangasViewModel);
@@ -135,7 +138,7 @@
         {
             ApplicationUser currentUser = await this.userManager.GetUserAsync(this.User);
 
-            bool isSuccessfullyVoted = await this.mangasUsers.EnrollUserToVoteAsync(currentUser.Id, id);
+            bool isSuccessfullyVoted = await this.mangasUsersService.EnrollUserToVoteAsync(currentUser.Id, id);
 
             if (isSuccessfullyVoted)
             {
@@ -144,6 +147,25 @@
             else
             {
                 this.TempData[NotificationsConstants.WARNING_NOTIFICATION] = NotificationsConstants.ALREADY_VOTED;
+            }
+
+            return this.RedirectToAction("index");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Disenroll(int id)
+        {
+            ApplicationUser currentUser = await this.userManager.GetUserAsync(this.User);
+
+            bool isSuccessfullyVoted = await this.mangasUsersService.RemoveTheUserVoteAsync(currentUser.Id, id);
+            if (isSuccessfullyVoted)
+            {
+                this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION] = NotificationsConstants.SUCCESSFUL_UNVOTED;
+            }
+            else
+            {
+
+                this.TempData[NotificationsConstants.WARNING_NOTIFICATION] = NotificationsConstants.ALREADY_UNVOTED;
             }
 
             return this.RedirectToAction("index");

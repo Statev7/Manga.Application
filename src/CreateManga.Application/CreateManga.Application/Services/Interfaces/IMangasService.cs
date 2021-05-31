@@ -9,7 +9,7 @@
 
     public interface IMangasService
     {
-        IEnumerable<MangaViewModel> GetAll();
+        IEnumerable<MangaViewModel> GetAll(string id);
 
         MangaViewModel GetDetailsById(int id);
 

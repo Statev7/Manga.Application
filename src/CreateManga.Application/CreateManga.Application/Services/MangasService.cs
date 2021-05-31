@@ -1,5 +1,7 @@
 ﻿namespace CreateManga.Application.Services
 {
+    using System;
+    using System.IO;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -11,23 +13,28 @@
     using CreateManga.Application.Areas.Designing.Mangas.BindingModels;
     using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
     using CreateManga.Application.Services.Interfaces;
-    using System.IO;
-    using System;
+
 
     public class MangasService : IMangasService
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IWebHostEnvironment hostEnvironment;
+        private readonly IMangasUsersService mangasUsersService;
 
-        public MangasService(ApplicationDbContext dbContext, IWebHostEnvironment hostEnvironment)
+        public MangasService(
+            ApplicationDbContext dbContext, 
+            IWebHostEnvironment hostEnvironment, 
+            IMangasUsersService mangasUsersService 
+            )
         {
             this.dbContext = dbContext;
             this.hostEnvironment = hostEnvironment;
+            this.mangasUsersService = mangasUsersService;
         }
 
-        public IEnumerable<MangaViewModel> GetAll()
+        public IEnumerable<MangaViewModel> GetAll(string id)
         {
-            List<MangaViewModel> mangas = this.dbContext.Manga
+            IEnumerable<MangaViewModel> mangas = this.dbContext.Manga
                .Select(manga => new MangaViewModel
                {
                    Id = manga.Id,
@@ -36,6 +43,7 @@
                    EndDate = manga.EndDate,
                    Description = manga.Description,
                    ImageName = manga.ImageName,
+                   CurrentUserIsVoted = this.mangasUsersService.IsAlreadyVoted(id, manga.Id)
                })
                .ToList();
 

@@ -15,13 +15,11 @@
     {
         private readonly ApplicationDbContext dbContext;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IMangasService mangasService;
 
-        public MangasUserService(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager, IMangasService mangasService)
+        public MangasUserService(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             this.dbContext = dbContext;
             this.userManager = userManager;
-            this.mangasService = mangasService;
         }
 
         public async Task<bool> EnrollUserToVoteAsync(string userId, int mangaId)
@@ -33,7 +31,11 @@
                 return false;
             }
 
-            MangaUser mangaUser = GetVoteted(userId, mangaId);
+            MangaUser mangaUser = new MangaUser()
+            {
+                UserId = userId,
+                MangaId = mangaId,
+            };
 
             await this.dbContext.MangasUsers.AddAsync(mangaUser);
             await this.dbContext.SaveChangesAsync();
@@ -50,7 +52,7 @@
                 return false;
             }
 
-            MangaUser mangaUser = GetVoteted(userId, mangaId);
+            MangaUser mangaUser = GetVoted(userId, mangaId);
 
             this.dbContext.MangasUsers.Remove(mangaUser);
             await this.dbContext.SaveChangesAsync();
@@ -60,25 +62,31 @@
 
         public bool IsAlreadyVoted(string userId, int mangaId)
         {
-            MangaUser mangauser = this.dbContext.MangasUsers
-                .Where(mu => mu.UserId == userId && mu.MangaId == mangaId)
-                .FirstOrDefault();
+            MangaUser mangaUser = GetVoted(userId, mangaId);
 
-            bool isAlreadyVoted = mangauser != null;
+            bool isAlreadyVoted = mangaUser != null;
 
             return isAlreadyVoted;
         }
 
-        private MangaUser GetVoteted(string userId, int mangaId)
+        private MangaUser GetVoted(string userId, int mangaId)
         {
-            return this.dbContext.MangasUsers
-                            .Where(mu => mu.UserId == userId && mu.MangaId == mangaId)
-                            .FirstOrDefault();
+            MangaUser mangaUser = this.dbContext.MangasUsers
+                .Where(mu => mu.UserId == userId && mu.MangaId == mangaId)
+                .FirstOrDefault();
+
+            return mangaUser;
         }
 
         private async Task CheckIfUserAndMangaExistAsync(string userId, int mangaId)
         {
-            if (this.mangasService.CheckIfMangaExist(mangaId) == false)
+            Manga manga = this.dbContext.Manga
+                .Where(m => m.Id == mangaId)
+                .SingleOrDefault();
+
+            bool isMangaNotExists = manga == null;
+
+            if (isMangaNotExists)
             {
                 throw new ArgumentException(ExeptionConstants.NOT_EXISTING_MANGA_ERROR_MESSAGE);
             }

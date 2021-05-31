@@ -9,7 +9,9 @@
 
         public const string FAILED_TO_SET_DATE = "The start date cannot be later than the end date";
 
-        public const string SUCCESSFUL_VOTING = "Successfully voted for this anime!";
-        public const string ALREADY_VOTED = "You have already voted for this anime!";
+        public const string SUCCESSFUL_VOTING = "Successfully voted for this manga!";
+        public const string ALREADY_VOTED = "You have already voted for this manga!";
+        public const string SUCCESSFUL_UNVOTED = "Successfully unvoted from the manga!.";
+        public const string ALREADY_UNVOTED = "Already unvoted for this manga!";
     }
 }
