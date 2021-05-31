@@ -164,5 +164,16 @@
             this.dbContext.Manga.Remove(manga);
             await this.dbContext.SaveChangesAsync();
         }
+
+        public bool CheckIfMangaExist(int id)
+        {
+            Manga manga = this.dbContext.Manga
+                .Where(m => m.Id == id)
+                .SingleOrDefault();
+
+            bool isExist =  manga != null;
+
+            return isExist;
+        }
     }
 }

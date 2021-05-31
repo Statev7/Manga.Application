@@ -6,8 +6,9 @@
     bool isEndDateNull = Model.EndDate == null;
 }
 
-<h1>Details</h1>
-
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 <div>
     <h4>Manga</h4>
     <hr />
@@ -46,5 +47,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-area="Designing" asp-controller="Manga" asp-action="Enroll" asp-route-id="@Model.Id" class="btn btn-outline-danger w-25">Vote</a>
+    <a asp-area="Designing" asp-controller="Manga" asp-action="Enroll" asp-route-id="@Model.Id" class="btn btn-outline-danger w-25">Unvote</a>
 </div>

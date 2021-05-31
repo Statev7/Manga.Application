@@ -15,6 +15,8 @@
 
         Manga GetByModelName(string modelName);
 
+        bool CheckIfMangaExist(int id);
+
         Task CreateAsync(CreateMangaBindingModel model);
 
         UpdateMangaBiningModel UpdateById(int id);

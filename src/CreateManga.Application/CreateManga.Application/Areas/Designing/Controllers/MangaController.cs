@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Identity;
 
     using CreateManga.Application.Data.Models;
     using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
@@ -18,10 +19,14 @@
     public class MangaController : DesigningController
     {
         private readonly IMangasService mangasService;
+        private readonly IMangasUsersService mangasUsers;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public MangaController(IMangasService mangasService)
+        public MangaController(IMangasService mangasService, IMangasUsersService mangasUsers, UserManager<ApplicationUser> userManager)
         {
             this.mangasService = mangasService;
+            this.userManager = userManager;
+            this.mangasUsers = mangasUsers;
         }
 
         [Authorize]
@@ -121,6 +126,25 @@
         public async Task<IActionResult> Delete(int id)
         {
             await this.mangasService.DeleteAsync(id);
+
+            return this.RedirectToAction("index");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Enroll(int id)
+        {
+            ApplicationUser currentUser = await this.userManager.GetUserAsync(this.User);
+
+            bool isSuccessfullyVoted = await this.mangasUsers.EnrollUserToVoteAsync(currentUser.Id, id);
+
+            if (isSuccessfullyVoted)
+            {
+                this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION] = NotificationsConstants.SUCCESSFUL_VOTING;
+            }
+            else
+            {
+                this.TempData[NotificationsConstants.WARNING_NOTIFICATION] = NotificationsConstants.ALREADY_VOTED;
+            }
 
             return this.RedirectToAction("index");
         }
