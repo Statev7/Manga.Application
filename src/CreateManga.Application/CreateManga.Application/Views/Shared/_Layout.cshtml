@@ -6,14 +6,15 @@
     <title>@ViewData["Title"] | CreateManga</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/toastr/toastr.css" />
+    <link rel="stylesheet" href="~/js/GoTopButton.js" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="text-white" style="background-color: #191919">
     <header id="header">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
                 <img src="~/Img/Manga-Logo.png" class="img-fluid" alt="Logo" style="margin-right: 15px" />
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CreateManga</a>
+                <a class="my-nav-link navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CreateManga</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,18 +22,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="my-nav-link nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Designing" asp-controller="Manga" asp-action="Index">Mangas</a>
+                                <a class="my-nav-link nav-link" asp-area="Designing" asp-controller="Manga" asp-action="Index">Mangas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Designing" asp-controller="Characters" asp-action="Index">Characters</a>
+                                <a class="my-nav-link nav-link" asp-area="Designing" asp-controller="Characters" asp-action="Index">Characters</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Designing" asp-controller="Chapters" asp-action="Index">Chapters</a>
+                                <a class="my-nav-link nav-link" asp-area="Designing" asp-controller="Chapters" asp-action="Index">Chapters</a>
                             </li>
                         }
                     </ul>
@@ -69,6 +70,8 @@
             }
         };
     </script>
+
+    <script src="~/js/GoTopButton.js"></script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

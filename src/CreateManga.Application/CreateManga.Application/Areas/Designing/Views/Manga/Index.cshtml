@@ -14,18 +14,25 @@
 }
 
 <head>
+    <link rel="stylesheet" href="~/js/GoTopButton.js" />
     <link rel="stylesheet" href="~/css/MangaIndex.css" />
 </head>
-<h1>Manga index view</h1>
-<br />
-<div>
-    @if (isHaveCreateAndDeletePermissions)
-    {
-        <div>
-            <a class="btn btn-outline-danger mb-2" asp-action="Create">Create new Manga</a>
-        </div>
-    }
 
+<div>
+    <button onclick="GoTopFunction()" id="GoTopBtn" title="Go to top"><img src="~/Img/upIcon.png" style="width: 30px; height: 30px"/></button>
+</div>
+<div>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>All Mangas</h1>
+        <br />
+
+        @if (isHaveCreateAndDeletePermissions)
+        {
+            <div>
+                <a class="btn btn-outline-danger mb-2" asp-action="Create">Create new Manga</a>
+            </div>
+        }
+    </div>
     <div class="text-center" style="border-top: 1px solid white">
         @{
             foreach (var manga in Model.Mangas)
@@ -42,11 +49,14 @@
                         }
                         <br />
                         <div>
-                            <div class="mt-2 pb-2 mr-1 ml-2" style="border-bottom: 1px solid #979797">
-                                <span>@manga.MangaName</span>
-                            </div>
-                            <div class="mt-1">
-                                @manga.Description
+                            <div class="mt-2 pb-2 mr-1 ml-2" style="border-bottom: 1px solid #979797;">
+                                <span class="title">
+                                    @manga.MangaName
+                                </span>
+                                <br />
+                                <span>
+                                    @manga.Description
+                                </span>
                             </div>
                             <div class="mt-3 mb-2">
                                 @if (manga.CurrentUserIsVoted)
@@ -70,21 +80,21 @@
                                     </a>
                                 }
                             </div>
-                            <div class="pt-2">
-                                <a asp-controller="Manga" asp-action="Details" asp-route-id="@manga.Id">
+                            <div class="pt-1">
+                                <a class="options-bar" asp-controller="Manga" asp-action="Details" asp-route-id="@manga.Id">
                                     <span>Details</span>
                                 </a>
                                 @if (isHaveUpdatePermissions)
                                 {
                                     <span>|</span>
-                                    <a asp-controller="Manga" asp-action="Update" asp-route-id="@manga.Id">
+                                    <a class="options-bar" asp-controller="Manga" asp-action="Update" asp-route-id="@manga.Id">
                                         Update
                                     </a>
                                 }
                                 @if (isHaveCreateAndDeletePermissions)
                                 {
                                     <span>|</span>
-                                    <a asp-controller="Manga" asp-action="Delete" asp-route-id="@manga.Id">
+                                    <a class="options-bar" asp-controller="Manga" asp-action="Delete" asp-route-id="@manga.Id">
                                         Delete
                                     </a>
                                 }

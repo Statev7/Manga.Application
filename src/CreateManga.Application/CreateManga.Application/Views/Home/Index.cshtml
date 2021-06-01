@@ -2,6 +2,10 @@
     ViewData["Title"] = "Home Page";
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/Index.css" />
+</head>
+
 @if (this.User.Identity.IsAuthenticated)
 {
     <div class="text-center">
@@ -10,17 +14,15 @@
 }
 else
 {
-    //Банер, който да върти снимки
-    //Aside, в който ще стоят последните 3-4 създадени анимета.
-
     <div class="text-center mt-3">
-        <h1>Винаги сте мечтали да създадете ваша манга поредица?</h1>
+        <h1>Създай своя манга поредица</h1>
     </div>
-
-    <div class="mt-5">
-        <ol>
-            <li class="font-weight-bold">Как да си направите ваша манга поредица?</li>
-        </ol>
+    <div class="pt-3">
+        <img class="mySlides" src="~/Img/ImageForSlideShow/One-Piece-Manga.jpg">
+        <img class="mySlides" src="~/Img/ImageForSlideShow/my-hero-academia-Manga.jpg">
+        <img class="mySlides" src="~/Img/ImageForSlideShow/Naruto-Manga.jpg">
+        <script src="~/js/site.js"></script>
     </div>
+    
 }
 
