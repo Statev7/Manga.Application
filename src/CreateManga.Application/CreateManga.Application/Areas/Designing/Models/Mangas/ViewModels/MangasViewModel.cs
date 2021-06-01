@@ -6,5 +6,6 @@
     public class MangasViewModel
     {
         public IEnumerable<MangaViewModel> Mangas { get; set; }
+
     }
 }

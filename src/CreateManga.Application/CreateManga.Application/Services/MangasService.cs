@@ -136,8 +136,13 @@
             manga.StartDate = model.StartDate;
             manga.EndDate = model.EndDate;
             manga.Description = model.Description;
-            manga.ImageName = model.ImageName;
             manga.ImageFile = model.ImageFile;
+
+
+            if (manga.ImageName != null && model.ImageName == null)
+            {
+                model.ImageName = manga.ImageName;
+            }
 
             if (model.ImageFile != null)
             {

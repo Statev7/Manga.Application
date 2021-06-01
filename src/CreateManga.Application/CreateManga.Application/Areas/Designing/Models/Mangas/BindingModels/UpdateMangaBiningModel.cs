@@ -9,6 +9,7 @@
 
     public class UpdateMangaBiningModel
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
