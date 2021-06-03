@@ -37,6 +37,8 @@
                 MangaId = mangaId,
             };
 
+            await AddVote(mangaId);
+
             await this.dbContext.MangasUsers.AddAsync(mangaUser);
             await this.dbContext.SaveChangesAsync();
 
@@ -53,6 +55,7 @@
             }
 
             MangaUser mangaUser = GetVoted(userId, mangaId);
+            await RemoveVote(mangaId);
 
             this.dbContext.MangasUsers.Remove(mangaUser);
             await this.dbContext.SaveChangesAsync();
@@ -67,6 +70,35 @@
             bool isAlreadyVoted = mangaUser != null;
 
             return isAlreadyVoted;
+        }
+
+        private async Task AddVote(int mangaId)
+        {
+            Manga manga = this.dbContext.Manga
+                .Where(m => m.Id == mangaId)
+                .SingleOrDefault();
+
+            manga.Votes += 1;
+
+            this.dbContext.Update(manga);
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        private async Task RemoveVote(int mangaId)
+        {
+            Manga manga = this.dbContext.Manga
+                .Where(m => m.Id == mangaId)
+                .SingleOrDefault();
+
+            if (manga.Votes <= 0)
+            {
+                throw new Exception("Invalid operation");
+            }
+
+            manga.Votes -= 1;
+
+            this.dbContext.Update(manga);
+            await this.dbContext.SaveChangesAsync();
         }
 
         private MangaUser GetVoted(string userId, int mangaId)
