@@ -2,27 +2,63 @@
     ViewData["Title"] = "Home Page";
 }
 
-<head>
-    <link rel="stylesheet" href="~/css/Index.css" />
-</head>
 
 @if (this.User.Identity.IsAuthenticated)
 {
-    <div class="text-center">
+    <div class=" text-center">
         <h1 class="display-4">Добре дошли!</h1>
+    </div>
+    <div class="discord-text-flex-display d-flex justify-content-between pt-5">
+        <div>
+            <iframe src="https://discord.com/widget?id=849955464246591588&theme=dark" width="350" height="500"
+                    allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+            </iframe>
+        </div>
+        <div style="font-size: large">
+            Влезте в нашия дискорд сървър, за да споделите вашите идеии със съмишленици.
+            <div class="pt-3">
+                Преди да продължите напред, e препоръчително да погледните поверителността
+                <br />
+                относно вашите данни от тук:
+                <a style="text-decoration: none" asp-area="" asp-controller="Home" asp-action="Privacy">
+                    Privacy
+                </a>
+            </div>
+            <div class="pt-3">
+                Наслаждавайте се на както на вашите така и идеите на другите.
+            </div>
+            <div class="pt-3">
+                <img alt="Manga" class="mySlides" src="~/Img/ImageForSlideShow/One-Piece-Manga.jpg">
+                <img alt="Manga" class="mySlides" src="~/Img/ImageForSlideShow/my-hero-academia-Manga.jpg">
+                <img alt="Manga" class="mySlides" src="~/Img/ImageForSlideShow/Naruto-Manga.jpg">
+                <script src="~/js/site.js"></script>
+            </div>
+            <div class="pt-4">
+                При възникнал проблем може да се свържете с нас:
+                <div class="pt-3">
+                    <ul style="list-style-type: none">
+                        <li>
+                            <a href="https://www.google.com/intl/bg/gmail/about/#" style="text-decoration: none" target="_blank">
+                                <img alt="gmail-logo" src="~/Img/ContactPhoto/gmail-logo.png" class="contanct-photo" />
+                            </a>
+                            petiostatev2703@gmail.com
+                        </li>
+                        <li>
+                            <a href="https://discord.com/brand-new" style="text-decoration: none" target="_blank">
+                                <img src="~/Img/ContactPhoto/Discord-logo.png" class="contanct-photo" />
+                            </a>
+                            elementabg#7188
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 }
 else
 {
     <div class="text-center mt-3">
         <h1>Създай своя манга поредица</h1>
-    </div>
-    <div class="pt-3">
-        <img class="mySlides" src="~/Img/ImageForSlideShow/One-Piece-Manga.jpg">
-        <img class="mySlides" src="~/Img/ImageForSlideShow/my-hero-academia-Manga.jpg">
-        <img class="mySlides" src="~/Img/ImageForSlideShow/Naruto-Manga.jpg">
-        <script src="~/js/site.js"></script>
-    </div>
-    
+    </div>>
 }
 
