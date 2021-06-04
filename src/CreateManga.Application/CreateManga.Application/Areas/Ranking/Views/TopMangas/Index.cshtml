@@ -1,0 +1,36 @@
+﻿@model GetAllTopMangasViewModel
+
+@{
+    ViewData["Title"] = "Top mangas";
+}
+
+<div>
+    @foreach (var manga in Model.Mangas)
+    {
+        <div class="anime-form">
+            <div class="d-block" style="border: 1px solid #8c8c8c; background-color: black">
+                @if (manga.ImageName == null)
+                {
+                    <img src="~/Img/default-image.png" style="width: 100%; height: 300px" />
+                }
+                else
+                {
+                    <img src="@("~/ImageFromUsers/"+manga.ImageName)" asp-append-version="true" style="width: 100%; height: 300px" />
+                }
+                <br />
+                <div>
+                    <div class="mt-2 pb-2 mr-1 ml-2" style="border-bottom: 1px solid #979797;">
+                        <span class="title">
+                            @manga.MangaName
+                        </span>
+                        <br />
+                        <span>
+                            Total votes: @manga.Votes
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

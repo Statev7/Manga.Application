@@ -99,6 +99,7 @@ namespace CreateManga.Application
             services.AddScoped<ICharactersService, CharactersService>();
             services.AddScoped<IChaptersService, ChaptersService>();
             services.AddScoped<IMangasUsersService, MangasUserService>();
+            services.AddScoped<ITopMangasService, TopMangasService>();
         }
 
     }
