@@ -39,17 +39,24 @@
                     @Html.DisplayFor(modelItem => character.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = character.Id })
+                    <a class="options-bar" asp-controller="Characters" asp-action="Details" asp-route-id="@character.Id">
+                        <span>Details</span>
+                    </a>
 
                     @if (isHaveUpdatePermissions)
                     {
                         <span>|</span>
-                        @Html.ActionLink("Edit", "Update", new { id = character.Id })
+                        <a class="options-bar" asp-controller="Characters" asp-action="Update" asp-route-id="@character.Id">
+                            Update
+                        </a>
                     }
                     @if (isHaveCreateAndDeletePermissions)
                     {
                         <span>|</span>
-                        @Html.ActionLink("Delete", "Delete", new { id = character.Id })
+                        <a class="options-bar" data-toggle="modal" data-target="#modal">
+                            Delete
+                        </a>
+                        <partial name="_CharactersDeleteModel" model="@Model" />
                     }
                 </td>
             </tr>

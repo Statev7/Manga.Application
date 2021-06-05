@@ -15,8 +15,12 @@
 
 <div>
     <div class="d-flex justify-content-between align-items-center">
-        <h1>All Mangas</h1>
-        <br />
+        <div>
+            <a class="btn btn-outline-secondary mb-2" asp-area="Ranking" asp-controller="TopMangas" asp-action="Index">Top Manga</a>
+        </div>
+        <div>
+            <h1>All Manga</h1>
+        </div>
 
         @if (isHaveCreateAndDeletePermissions)
         {
@@ -26,7 +30,15 @@
         }
     </div>
     <div class="text-center" style="border-top: 1px solid white">
-        @{
+        @if (Model.Mangas.Count() == 0)
+        {
+            <div class="pt-5">
+                <h3 style="color: red">No manga available for display!</h3>
+            </div>
+        }
+        else
+        {
+
             foreach (var manga in Model.Mangas)
             {
                 <div class="anime-form">
@@ -86,9 +98,10 @@
                                 @if (isHaveCreateAndDeletePermissions)
                                 {
                                     <span>|</span>
-                                    <a class="options-bar" asp-controller="Manga" asp-action="Delete" asp-route-id="@manga.Id">
+                                    <a class="options-bar" data-toggle="modal" data-target="#modal">
                                         Delete
                                     </a>
+                                    <partial name="_MangasDeleteModal" model="@Model" />
                                 }
                             </div>
                         </div>
