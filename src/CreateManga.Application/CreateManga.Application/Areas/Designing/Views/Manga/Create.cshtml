@@ -4,17 +4,21 @@
     ViewData["Title"] = "Create manga";
 }
 
-<h1>Create</h1>
-
-<h4 >Manga</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="d-flex justify-content-between align-items-center" style="border-bottom: 1px solid white">
+    <div>
+        <a class="btn btn-outline-secondary mb-2" asp-action="Index">Back to List</a>
+    </div>
+    <div>
+        <h1>Create Manga</h1>
+    </div>
+</div>
+<div class="row pt-5">
+    <div class="mx-auto" style="width: 30%">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.Name" class="control-label"></label>
-                <input asp-for="@Model.Name" class="form-control" />
+                <input autofocus asp-for="@Model.Name" class="form-control" />
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,18 +38,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="@Model.ImageFile" class="control-label"></label>
-                <input asp-for="@Model.ImageFile" accept="image/*"/>
+                <input class="font-weight-bold" asp-for="@Model.ImageFile" accept="image/*" />
                 <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-danger" />
+            <div class="form-group text-center">
+                <input class="btn btn-danger w-50 mt-2" type="submit" value="Create"/>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
