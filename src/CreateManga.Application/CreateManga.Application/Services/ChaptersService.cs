@@ -4,6 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.IO;
+
+    using Microsoft.AspNetCore.Hosting;
 
     using CreateManga.Application.Data;
     using CreateManga.Application.Data.Models;
@@ -15,10 +18,12 @@
     public class ChaptersService : IChaptersService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly IWebHostEnvironment hostEnvironment;
 
-        public ChaptersService(ApplicationDbContext dbContext)
+        public ChaptersService(ApplicationDbContext dbContext, IWebHostEnvironment hostEnvironment)
         {
             this.dbContext = dbContext;
+            this.hostEnvironment = hostEnvironment;
         }
 
         public IEnumerable<GetAllChaptersViewModel> GetAll()
@@ -28,6 +33,7 @@
                 {
                     Id = chapters.Id,
                     Title = chapters.Title,
+                    ImageName = chapters.ImageName
                 })
                 .ToList();
 
@@ -67,7 +73,23 @@
             Chapter chapter = new Chapter();
             chapter.Title = model.Title;
             chapter.Story = model.Story;
+            chapter.ImageFile = model.ImageFile;
+            chapter.ImageName = model.ImageName;
             chapter.MangaId = model.MangaId;
+
+            if (model.ImageFile != null)
+            {
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(chapter.ImageFile.FileName);
+                string exension = Path.GetExtension(chapter.ImageFile.FileName);
+                chapter.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
+                string path = Path.Combine(wwwRootPath + "/Img/ChaptersImage", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await chapter.ImageFile.CopyToAsync(fileStream);
+                }
+            }
 
             await this.dbContext.Chapter.AddAsync(chapter);
             await this.dbContext.SaveChangesAsync();

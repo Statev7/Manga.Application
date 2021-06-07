@@ -1,6 +1,9 @@
 ﻿namespace CreateManga.Application.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    using Microsoft.AspNetCore.Http;
 
     public class Chapter
     {
@@ -18,6 +21,12 @@
         [Required]
         public int MangaId { get; set; }
 
+        public string ImageName { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
+
         public virtual Manga Manga { get; set; }
+
     }
 }
