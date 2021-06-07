@@ -1,0 +1,16 @@
+﻿.chapter-form{
+    display: flex;
+}
+.chapter-form:hover {
+    background-color: #111111;
+    opacity: 0.7;
+}
+.chapter-title {
+    font-size: 20px;
+    color: silver;
+}
+.chapter-info{
+    padding-left: 15px;
+}
+
+
