@@ -4,12 +4,16 @@
     ViewData["Title"] = $"Create chapters";
 }
 
-<h1>Create</h1>
-
-<h4>Chapter</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="d-flex justify-content-between align-items-center" style="border-bottom: 1px solid white">
+    <div>
+        <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
+    </div>
+    <div>
+        <h1>Create new chapter</h1>
+    </div>
+</div>
+<div class="row pt-5">
+    <div class="mx-auto" style="width: 40%">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -19,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Story" class="control-label"></label>
-                <textarea asp-for="Story" class="w-100"></textarea>
+                <textarea asp-for="Story" class="w-100" style="height: 200px"></textarea>
                 <span asp-validation-for="Story" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -31,15 +35,11 @@
                     }
                 </select>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-danger" />
+            <div class="form-group text-center">
+                <input class="btn btn-danger w-50 mt-2" type="submit" value="Create" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

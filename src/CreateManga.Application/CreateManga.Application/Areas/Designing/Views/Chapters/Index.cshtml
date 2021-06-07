@@ -13,16 +13,18 @@
         this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
 
-<h1>Characters</h1>
-<br />
-@if (isHaveCreateAndDeletePermissions)
-{
-    <div>
-        <a class="btn btn-outline-danger" asp-action="Create">Create Chapter</a>
-    </div>
-}
-<br />
-<table class="table text-white">
+<div class="d-flex justify-content-between align-items-center" style="border-bottom: 1px solid white">
+    <h1>
+        All chapters
+    </h1>
+    @if (isHaveCreateAndDeletePermissions)
+    {
+        <div>
+            <a class="btn btn-outline-danger" asp-action="Create">Create Chapter</a>
+        </div>
+    }
+</div>
+<table class="table text-white mt-5">
     <thead>
         <tr>
             <th>
@@ -39,14 +41,14 @@
                     @Html.DisplayFor(modelItem => chapters.Title)
                 </td>
                 <td>
-                    <a class="options-bar" asp-controller="Characters" asp-action="Details" asp-route-id="@chapters.Id">
+                    <a class="options-bar" asp-controller="Chapters" asp-action="Details" asp-route-id="@chapters.Id">
                         <span>Details</span>
                     </a>
 
                     @if (isHaveUpdatePermissions)
                     {
                         <span>|</span>
-                        <a class="options-bar" asp-controller="Characters" asp-action="Update" asp-route-id="@chapters.Id">
+                        <a class="options-bar" asp-controller="Chapters" asp-action="Update" asp-route-id="@chapters.Id">
                             Update
                         </a>
                     }

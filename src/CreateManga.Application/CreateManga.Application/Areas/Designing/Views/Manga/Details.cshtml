@@ -6,12 +6,15 @@
     bool isEndDateNull = Model.EndDate == null;
 }
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="d-flex justify-content-between align-items-center" style="border-bottom: 1px solid white">
+    <div>
+        <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
+    </div>
+    <div>
+        <h1>Details: <b>@Model.MangaName</b></h1>
+    </div>
 </div>
-<div>
-    <h4>Manga</h4>
-    <hr />
+<div class="mt-5">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.MangaName)
