@@ -2,6 +2,10 @@
 
 @{
     ViewData["Title"] = $"{Model.Title} - Details";
+
+    bool isHaveDeletePermissions =
+       this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
+       this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
 
 <div class="d-flex justify-content-between align-items-center" style="border-bottom: 1px solid white">
@@ -11,8 +15,18 @@
     <div>
         <h1>Title: <b>@Model.Title</b></h1>
     </div>
+    <div>
+        @if (isHaveDeletePermissions)
+        {
+            <a class="btn btn-outline-danger" data-toggle="modal" data-target="#modal">
+                Delete
+            </a>
+        }
+    </div>
 </div>
 <div class="mt-5">
     <textarea class="w-100" style="height: 300px; color: black; background-color: silver; font-size: large; border-radius: 1%">@Model.Story</textarea>
 </div>
+
+<partial name="_ChaptersDeleteModel" model="@Model" />
 

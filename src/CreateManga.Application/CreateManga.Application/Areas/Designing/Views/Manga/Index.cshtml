@@ -8,7 +8,7 @@
         this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME) ||
         this.User.IsInRole(RolesConstants.EDITOR_ROLE_NAME);
 
-    bool isHaveCreateAndDeletePermissions =
+    bool isHaveCreatePermissions =
         this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
         this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
@@ -22,7 +22,7 @@
             <h1>All Manga</h1>
         </div>
 
-        @if (isHaveCreateAndDeletePermissions)
+        @if (isHaveCreatePermissions)
         {
             <div>
                 <a class="btn btn-outline-danger mb-2" asp-action="Create">Create new Manga</a>
@@ -94,14 +94,6 @@
                                     <a class="options-bar" asp-controller="Manga" asp-action="Update" asp-route-id="@manga.Id">
                                         Update
                                     </a>
-                                }
-                                @if (isHaveCreateAndDeletePermissions)
-                                {
-                                    <span>|</span>
-                                    <a class="options-bar" data-toggle="modal" data-target="#modal">
-                                        Delete
-                                    </a>
-                                    <partial name="_MangasDeleteModal" model="@Model" />
                                 }
                             </div>
                         </div>

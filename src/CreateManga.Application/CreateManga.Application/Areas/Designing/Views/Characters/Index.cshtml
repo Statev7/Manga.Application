@@ -8,14 +8,14 @@
         this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME) ||
         this.User.IsInRole(RolesConstants.EDITOR_ROLE_NAME);
 
-    bool isHaveCreateAndDeletePermissions =
+    bool isHaveCreatePermissions =
         this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
         this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
 
 <h1>Characters</h1>
 <br />
-@if (isHaveCreateAndDeletePermissions)
+@if (isHaveCreatePermissions)
 {
     <div>
         <a class="btn btn-outline-danger" asp-action="Create">Create Character</a>
@@ -49,14 +49,6 @@
                         <a class="options-bar" asp-controller="Characters" asp-action="Update" asp-route-id="@character.Id">
                             Update
                         </a>
-                    }
-                    @if (isHaveCreateAndDeletePermissions)
-                    {
-                        <span>|</span>
-                        <a class="options-bar" data-toggle="modal" data-target="#modal">
-                            Delete
-                        </a>
-                        <partial name="_CharactersDeleteModel" model="@Model" />
                     }
                 </td>
             </tr>

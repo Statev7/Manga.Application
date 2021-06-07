@@ -2,10 +2,21 @@
 
 @{
     ViewData["Title"] = $"Details - {Model.Name}";
+
+    bool isHaveDeletePermissions =
+       this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
+       this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
 
 <h1>Details</h1>
-
+<div>
+    @if (isHaveDeletePermissions)
+    {
+        <a class="btn btn-outline-danger" data-toggle="modal" data-target="#modal">
+            Delete
+        </a>
+    }
+</div>
 <div>
     <h4>Characters</h4>
     <hr />
@@ -45,3 +56,5 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<partial name="_CharactersDeleteModel" model="@Model" />

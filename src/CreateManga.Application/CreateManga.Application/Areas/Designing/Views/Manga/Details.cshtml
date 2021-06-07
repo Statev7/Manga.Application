@@ -4,6 +4,10 @@
     ViewData["Title"] = $"Details - {Model.MangaName}";
 
     bool isEndDateNull = Model.EndDate == null;
+
+    bool isHaveDeletePermissions =
+    this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
+    this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
 
 <div class="d-flex justify-content-between align-items-center" style="border-bottom: 1px solid white">
@@ -13,22 +17,30 @@
     <div>
         <h1>Details: <b>@Model.MangaName</b></h1>
     </div>
+    <div>
+        @if (isHaveDeletePermissions)
+        {
+            <a class="btn btn-outline-danger" data-toggle="modal" data-target="#modal">
+                Delete
+            </a>
+        }
+    </div>
 </div>
 <div class="mt-5">
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.MangaName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MangaName)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StartDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EndDate)
         </dt>
         <dd class="col-sm-10">
@@ -41,12 +53,14 @@
                 @Html.DisplayFor(model => model.EndDate)
             }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
 </div>
+
+<partial name="_MangasDeleteModal" model="@Model" />
 

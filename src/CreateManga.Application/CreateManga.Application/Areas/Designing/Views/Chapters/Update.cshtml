@@ -1,16 +1,20 @@
 ﻿@model UpdateChaptersBindingModel
 
 @{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = $"Update - {Model.Title}";
 }
 
-<h1>Update</h1>
-
-<h4>UpdateChaptersBindingModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Update">
+<div class="d-flex justify-content-between align-items-center" style="border-bottom: 1px solid white">
+    <div>
+        <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
+    </div>
+    <div>
+        <h1>Update: <b>@Model.Title</b></h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="mx-auto" style="width: 40%">
+        <form asp-action="Update" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -21,8 +25,14 @@
             <div class="form-group">
                 <label asp-for="Story" class="control-label"></label>
                 <br />
-                <textarea asp-for="Story" class="w-100"></textarea>
+                <textarea asp-for="Story" class="w-100" style="height: 200px"></textarea>
                 <span asp-validation-for="Story" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ImageFile" class="control-label"></label>
+                <br />
+                <input class="font-weight-bold" asp-for="@Model.ImageFile" accept="image/*" />
+                <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="form-group">
@@ -35,15 +45,11 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group text-center">
+                <input class="btn btn-danger w-50 mt-2" type="submit" value="Save" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
