@@ -83,7 +83,7 @@
                 string fileName = Path.GetFileNameWithoutExtension(chapter.ImageFile.FileName);
                 string exension = Path.GetExtension(chapter.ImageFile.FileName);
                 chapter.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
-                string path = Path.Combine(wwwRootPath + "/Img/ChaptersImage", fileName);
+                string path = Path.Combine(wwwRootPath + "/Img/ChaptersImage/", fileName);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -123,7 +123,27 @@
 
             chapter.Title = model.Title;
             chapter.Story = model.Story;
+            chapter.ImageFile = model.ImageFile;
             chapter.MangaId = model.MangaId;
+
+            if (chapter.ImageName != null && chapter.ImageName == null)
+            {
+                model.ImageName = chapter.ImageName;
+            }
+
+            if (model.ImageFile != null)
+            {
+                string wwwRootPath = hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(chapter.ImageFile.FileName);
+                string exension = Path.GetExtension(chapter.ImageFile.FileName);
+                chapter.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
+                string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await chapter.ImageFile.CopyToAsync(fileStream);
+                }
+            }
 
             this.dbContext.Chapter.Update(chapter);
             await this.dbContext.SaveChangesAsync();
