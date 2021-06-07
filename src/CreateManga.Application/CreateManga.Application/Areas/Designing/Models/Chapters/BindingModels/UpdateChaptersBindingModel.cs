@@ -11,7 +11,7 @@
 
         [Required]
         [MinLength(2)]
-        [MaxLength(64)]
+        [MaxLength(16)]
         public string Title { get; set; }
 
         [Required]
