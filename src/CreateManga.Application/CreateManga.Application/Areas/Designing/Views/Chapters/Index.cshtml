@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<GetAllChaptersViewModel>
 
 @{
-    ViewData["Title"] = "All characters";
+    ViewData["Title"] = "All chapters";
 
     bool isHaveUpdatePermissions =
     this.User.IsInRole(RolesConstants.ADMIN_ROLE_NAME) ||
@@ -26,46 +26,56 @@
 </div>
 <table class="table text-white mt-5">
     <tbody>
-        @foreach (GetAllChaptersViewModel chapters in Model)
+        @if (Model.Count() == 0)
         {
-            <tr>
-                <td>
-                    <div class="chapter-form">
-                        <div class="chapter-image-form">
-                            @if (chapters.ImageName == null)
-                            {
-                                <a asp-area="Designing" asp-controller="Chapters" asp-action="Details" asp-route-id="@chapters.Id">
-                                    <img src="~/Img/default-image.png" style="width: 180px; height: 105px" />
-                                </a>
-                            }
-                            else
-                            {
-                                <a asp-area="Designing" asp-controller="Chapters" asp-action="Details" asp-route-id="@chapters.Id">
-                                    <img alt="Image not found" src="@("~/Img/ChaptersImage/"+chapters.ImageName)" asp-append-version="true" style="width: 180px; height: 105px" />
-                                </a>
-                            }
-                        </div>
-                        <div class="chapter-info">
-                            <div class="chapter-title">
-                                Chapter name: <span>@chapters.Title</span>
-                            </div>
-                            <div class="pt-5">
-                                <a class="options-bar" asp-controller="Chapters" asp-action="Details" asp-route-id="@chapters.Id">
-                                    <span>Details</span>
-                                </a>
-
-                                @if (isHaveUpdatePermissions)
+            <div class="pt-5 text-center">
+                <h3 style="color: red">No chapters available for display!</h3>
+            </div>
+        }
+        else
+        {
+            @foreach (GetAllChaptersViewModel chapters in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="chapter-form">
+                            <div class="chapter-image-form">
+                                @if (chapters.ImageName == null)
                                 {
-                                    <span>|</span>
-                                    <a class="options-bar" asp-controller="Chapters" asp-action="Update" asp-route-id="@chapters.Id">
-                                        Update
+                                    <a asp-area="Designing" asp-controller="Chapters" asp-action="Details" asp-route-id="@chapters.Id">
+                                        <img src="~/Img/default-image.png" style="width: 180px; height: 105px" />
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-area="Designing" asp-controller="Chapters" asp-action="Details" asp-route-id="@chapters.Id">
+                                        <img alt="Image not found" src="@("~/Img/ChaptersImage/"+chapters.ImageName)" asp-append-version="true" style="width: 180px; height: 105px" />
                                     </a>
                                 }
                             </div>
+                            <div class="chapter-info">
+                                <div class="chapter-title">
+                                    Chapter name: <span>@chapters.Title</span>
+                                </div>
+                                <div class="pt-5">
+                                    <a class="options-bar" asp-controller="Chapters" asp-action="Details" asp-route-id="@chapters.Id">
+                                        <span>Details</span>
+                                    </a>
+
+                                    @if (isHaveUpdatePermissions)
+                                    {
+                                        <span>|</span>
+                                        <a class="options-bar" asp-controller="Chapters" asp-action="Update" asp-route-id="@chapters.Id">
+                                            Update
+                                        </a>
+                                    }
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            }
         }
+
     </tbody>
 </table>

@@ -25,3 +25,45 @@
 .contanct-photo:hover{
     opacity: 0.7;
 }
+
+.index-information-div{
+    display: flex;
+}
+@media (max-width: 1024px) {
+    .index-information-div {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.index-information-text{
+    font-size: large;
+}
+
+@media (max-width: 1024px) {
+    .index-panels {
+        margin-left: auto;
+        margin-right: auto;
+        transform: scale(1.1);
+        width: 350px;
+        height: 150px;
+    }
+}
+
+.index-image-panel{
+    width: 550px;
+    height: 250px;
+    transition: 0.4s;
+}
+.index-image-panel:hover{
+    transform: scale(1.1);
+}
+@media (max-width: 1024px) {
+    .index-image-panel {
+        width: 350px;
+        height: 150px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
