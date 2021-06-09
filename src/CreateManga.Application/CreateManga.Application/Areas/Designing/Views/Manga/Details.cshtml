@@ -15,7 +15,7 @@
         <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
     </div>
     <div>
-        <h1>Details: <b>@Model.MangaName</b></h1>
+        <h1><b>@Model.MangaName</b></h1>
     </div>
     <div>
         @if (isHaveDeletePermissions)
@@ -27,38 +27,50 @@
     </div>
 </div>
 <div class="mt-5">
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MangaName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MangaName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd class="col-sm-10">
-            @if (isEndDateNull)
+    <dl class="d-flex">
+        <div>
+            @if (Model.ImageName == null)
             {
-                <span>Not set</span>
+                <img src="~/Img/default-image.png" style="width: 225px; height: 320px" />
             }
             else
             {
-                @Html.DisplayFor(model => model.EndDate)
+                <img src="@("~/ImageFromUsers/"+Model.ImageName)" asp-append-version="true" style="width: 225px; height: 320px" />
             }
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+        </div>
+        <div class="pl-5">
+            <dt>
+                @Html.DisplayNameFor(model => model.MangaName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MangaName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+            <dd>
+                @if (isEndDateNull)
+                {
+                    <span>Not set</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.EndDate)
+                }
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </div>
     </dl>
 </div>
 

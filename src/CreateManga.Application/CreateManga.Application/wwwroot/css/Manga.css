@@ -39,3 +39,17 @@
 #GoTopBtn:hover{
   background-color: #333;
 }
+.topmanga-table{
+    border-collapse: separate;
+    border-spacing: 0 1em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+}
+td{
+    width: 250px;
+    height: 100px;
+}
+.topmanga-tr:nth-child(even) {
+    background-color: #111111;
+}
