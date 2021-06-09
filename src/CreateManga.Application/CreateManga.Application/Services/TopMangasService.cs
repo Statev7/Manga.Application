@@ -33,7 +33,7 @@
                    Votes = manga.Votes,
                })
                .OrderByDescending(m => m.Votes)
-               .Take(3)
+               .Take(5)
                .ToList();
 
             return mangas;
