@@ -65,6 +65,14 @@
             return mangas;
         }
 
+        public Character GetByModelName(string modelName)
+        {
+            Character mangaFromDb = this.dbContext.Character
+                .SingleOrDefault(character => character.Name == modelName);
+
+            return mangaFromDb;
+        }
+
         public async Task CreateAsync(CreateCharactersBindingModel model)
         {
             Character character = new Character();

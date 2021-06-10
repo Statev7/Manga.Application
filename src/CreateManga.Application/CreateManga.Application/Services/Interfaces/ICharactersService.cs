@@ -6,6 +6,7 @@
     using CreateManga.Application.Areas.Designing.Characters.BindingModels;
     using CreateManga.Application.Areas.Designing.Characters.ViewModels;
     using CreateManga.Application.Areas.Designing.Mangas.ViewModels;
+    using CreateManga.Application.Data.Models;
 
     public interface ICharactersService
     {
@@ -14,6 +15,8 @@
         DetailsCharactersViewModel GetDetailsById(int id);
 
         IEnumerable<MangasIdNameViewModel> GetByName();
+
+        Character GetByModelName(string modelName);
 
         Task CreateAsync(CreateCharactersBindingModel model);
 

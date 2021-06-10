@@ -33,7 +33,7 @@
                 {
                     Id = chapters.Id,
                     Title = chapters.Title,
-                    ImageName = chapters.ImageName
+                    ImageName = chapters.ImageName,
                 })
                 .ToList();
 
@@ -66,6 +66,14 @@
                 .ToList();
 
             return mangas;
+        }
+
+        public Chapter GetByModelName(string modelName)
+        {
+            Chapter mangaFromDb = this.dbContext.Chapter
+                .SingleOrDefault(chapter => chapter.Title == modelName);
+
+            return mangaFromDb;
         }
 
         public async Task CreateAsync(CreateChaptersBindingModel model)
