@@ -4,15 +4,17 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    using CreateManga.Application.Data.Constants;
+
     public class CreateCharactersBindingModel
     {
         [Required]
-        [MinLength(2)]
-        [MaxLength(64)]
+        [MinLength(CharactersConstants.MIN_LENGHT_NAME, ErrorMessage = CharactersConstants.MIN_LENGHT_NAME_ERROR_MESSAGE)]
+        [MaxLength(CharactersConstants.MAX_LENGHT_NAME, ErrorMessage = CharactersConstants.MAX_LENGHT_NAME_ERROR_MESSAGE)]
         public string Name { get; set; }
 
         [Required]
-        [Range(1, 100000)]
+        [Range(CharactersConstants.MIN_AGE_VALUE, CharactersConstants.MAX_AGE_VALUE)]
         public int Age { get; set; }
 
         [Required]

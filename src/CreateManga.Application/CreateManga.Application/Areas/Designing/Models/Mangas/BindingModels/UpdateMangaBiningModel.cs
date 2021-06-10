@@ -7,14 +7,16 @@
 
     using Microsoft.AspNetCore.Http;
 
+    using CreateManga.Application.Data.Constants;
+
     public class UpdateMangaBiningModel
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [MinLength(2)]
-        [MaxLength(32)]
+        [MinLength(MangasConstants.MIN_LENGHT_NAME, ErrorMessage = MangasConstants.MIN_LENGHT_NAME_ERROR_MESSAGE)]
+        [MaxLength(MangasConstants.MAX_LENGHT_NAME, ErrorMessage = MangasConstants.MAX_LENGHT_NAME_ERROR_MESSAGE)]
         [DisplayName("Manga name")]
         public string Name { get; set; }
 
@@ -26,7 +28,7 @@
         public DateTime? EndDate { get; set; }
 
         [Required]
-        [MaxLength(32)]
+        [MaxLength(MangasConstants.MAX_DESCRIPTION_LENGHT, ErrorMessage = MangasConstants.DESCRIPTION_ERROR_MESSAGE)]
         public string Description { get; set; }
 
         public string ImageName { get; set; }

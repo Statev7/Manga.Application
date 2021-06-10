@@ -6,14 +6,16 @@
 
     using Microsoft.AspNetCore.Http;
 
+    using CreateManga.Application.Constants.DataConstants;
+
     public class CreateChaptersBindingModel
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [MinLength(2)]
-        [MaxLength(16)]
+        [MinLength(ChaptersConstants.MIN_LENGHT_NAME, ErrorMessage = ChaptersConstants.MIN_LENGHT_NAME_ERROR_MESSAGE)]
+        [MaxLength(ChaptersConstants.MAX_LENGHT_NAME, ErrorMessage = ChaptersConstants.MAX_LENGHT_NAME_ERROR_MESSAGE)]
         public string Title { get; set; }
 
         [Required]

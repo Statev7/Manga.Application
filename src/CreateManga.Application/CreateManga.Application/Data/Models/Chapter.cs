@@ -5,14 +5,16 @@
 
     using Microsoft.AspNetCore.Http;
 
+    using CreateManga.Application.Constants.DataConstants;
+
     public class Chapter
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [MinLength(2)]
-        [MaxLength(16)]
+        [MinLength(ChaptersConstants.MIN_LENGHT_NAME)]
+        [MaxLength(ChaptersConstants.MAX_LENGHT_NAME)]
         public string Title { get; set; }
 
         [Required]
