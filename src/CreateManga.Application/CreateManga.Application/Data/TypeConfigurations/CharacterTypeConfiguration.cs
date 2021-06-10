@@ -1,9 +1,9 @@
 ﻿namespace CreateManga.Application.Data.TypeConfigurations
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     using CreateManga.Application.Data.Models;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     public class CharacterTypeConfiguration : IEntityTypeConfiguration<Character>
     {

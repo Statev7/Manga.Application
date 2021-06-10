@@ -1,15 +1,12 @@
 ﻿namespace CreateManga.Application.Areas.Ranking.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    using CreateManga.Application.Areas.Ranking.Models.TopMangas.ViewModels;
-    using CreateManga.Application.Services.Interfaces;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
+    using CreateManga.Application.Areas.Ranking.Models.TopMangas.ViewModels;
+    using CreateManga.Application.Services.Interfaces;
 
     public class TopMangasController : RankingController
     {

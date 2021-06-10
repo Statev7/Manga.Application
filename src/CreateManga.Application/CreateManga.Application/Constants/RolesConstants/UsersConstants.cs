@@ -1,6 +1,5 @@
 ﻿namespace CreateManga.Application.Constants.RolesConstants
 {
-
     public static class UsersConstants
     {
         public const string USER_USERNAME = "User";
