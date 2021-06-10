@@ -52,6 +52,7 @@
             bool isMangaNull = manga == null;
             if (isMangaNull)
             {
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.CANNOT_GET_A_DETAILS_ABOUT_EMPTY_CHAPTER;
                 return this.RedirectToRoute("index");
             }
 
@@ -75,21 +76,23 @@
                 return this.View("create", model);
             }
 
+            Manga mangaFromDb = this.mangasService.GetByModelName(model.Name);
+                
+            bool isMangaAlreadyInDb = mangaFromDb != null;
+            if (isMangaAlreadyInDb)
+            {
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.MANGA_ALREADY_EXIST;
+                return this.RedirectToAction("index");
+            }
+
             if (model.StartDate > model.EndDate)
             {
                 this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.FAILED_TO_SET_DATE;
                 return this.RedirectToAction("index");
             }
 
-            Manga mangaFromDb = this.mangasService.GetByModelName(model.Name);
-                
-            bool isMangaAlreadyInDb = mangaFromDb != null;
-            if (isMangaAlreadyInDb)
-            {
-                return this.RedirectToAction("index");
-            }
-
             await this.mangasService.CreateAsync(model);
+            this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION] = String.Format(NotificationsConstants.SUCCESSFUL_CREATED_A_MANGA, model.Name);
 
             return this.RedirectToAction("index");
         }
@@ -103,6 +106,7 @@
             bool isMangaNull = manga == null;
             if (isMangaNull)
             {
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.CANNOT_UPDATE_EMPTY_MANGA;
                 return this.RedirectToAction("index");
             }
 
@@ -120,6 +124,7 @@
             }
 
             await this.mangasService.UpdateAsync(model);
+            this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION] = String.Format(NotificationsConstants.SUCCESSFUL_UPDATE_A_MANGA, model.Name);
 
             return this.RedirectToAction("index");
         }
@@ -164,7 +169,6 @@
             }
             else
             {
-
                 this.TempData[NotificationsConstants.WARNING_NOTIFICATION] = NotificationsConstants.ALREADY_UNVOTED;
             }
 

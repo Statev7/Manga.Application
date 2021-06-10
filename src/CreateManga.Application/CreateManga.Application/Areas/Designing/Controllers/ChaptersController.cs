@@ -13,6 +13,8 @@
     using CreateManga.Application.Areas.Designing.Chapters.BindingModels;
     using CreateManga.Application.Areas.Designing.Controllers;
     using CreateManga.Application.Constants.RolesConstants;
+    using CreateManga.Application.Data.Models;
+    using CreateManga.Application.Constants.NotificationsConstants;
 
     public class ChaptersController : DesigningController
     {
@@ -41,6 +43,7 @@
             bool isCharacterNull = chapter == null;
             if (isCharacterNull)
             {
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.CANNOT_GET_A_DETAILS_ABOUT_EMPTY_CHAPTER;
                 return this.RedirectToAction("index");
             }
 
@@ -56,7 +59,8 @@
             bool areMangasEmpty = mangas.Count() == 0;
             if (areMangasEmpty)
             {
-                this.RedirectToAction("index");
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.CANNOT_CRAETE_CHAPTER_WITHOUT_MANGA;
+                return this.RedirectToAction("index");
             }
 
             ViewBag.mangas = mangas;
@@ -74,7 +78,18 @@
                 return this.RedirectToAction("create");
             }
 
+            Chapter chapterFromDb = this.chapterService.GetByModelName(model.Title);
+
+            bool isMangaAlreadyInDb = chapterFromDb != null;
+            if (isMangaAlreadyInDb)
+            {
+                this.TempData[NotificationsConstants.WARNING_NOTIFICATION] = NotificationsConstants.CHAPTER_ALREADY_EXIST;
+                return this.RedirectToAction("index");
+            }
+
             await this.chapterService.CreateAsync(model);
+            this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION] = 
+                string.Format(NotificationsConstants.SUCCESSFUL_CREATED_A_CHAPTER, model.Title);
 
             return this.RedirectToAction("index");
         }
@@ -91,6 +106,7 @@
             bool areMangasEmpty = mangas.Count() == 0;
             if (isCharacterNull || areMangasEmpty)
             {
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.CANNOT_UPDATE_EMPTY_CHAPTER;
                 return this.RedirectToAction("index");
             }
 
@@ -110,6 +126,8 @@
             }
 
             await this.chapterService.UpdateAsync(model);
+            this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION] =
+                string.Format(NotificationsConstants.SUCCESSFUL_UPDATE_A_CHAPTER, model.Title);
 
             return this.RedirectToAction("index");
         }

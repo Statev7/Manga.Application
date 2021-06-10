@@ -13,6 +13,8 @@
     using CreateManga.Application.Services.Interfaces;
     using CreateManga.Application.Areas.Designing.Controllers;
     using CreateManga.Application.Constants.RolesConstants;
+    using CreateManga.Application.Constants.NotificationsConstants;
+    using CreateManga.Application.Data.Models;
 
     public class CharactersController : DesigningController
     {
@@ -41,6 +43,7 @@
             bool isCharacterNull = character == null;
             if (isCharacterNull)
             {
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.CANNOT_GET_A_DETAILS_ABOUT_EMPTY_CHARACTER;
                 return this.RedirectToAction("index");
             }
 
@@ -56,7 +59,8 @@
             bool areMangasEmpty = mangas.Count() == 0;
             if (areMangasEmpty)
             {
-                this.RedirectToAction("index");
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.CANNOT_CRAETE_CHARACTER_WITHOUT_MANGA;
+                return this.RedirectToAction("index");
             }
 
             ViewBag.mangas = mangas;
@@ -74,7 +78,17 @@
                 return this.RedirectToAction("create");
             }
 
+            Character chapterFromDb = this.charactersService.GetByModelName(model.Name);
+
+            bool isMangaAlreadyInDb = chapterFromDb != null;
+            if (isMangaAlreadyInDb)
+            {
+                this.TempData[NotificationsConstants.WARNING_NOTIFICATION] = NotificationsConstants.CHARACTER_ALREADY_EXIST;
+                return this.RedirectToAction("index");
+            }
+
             await this.charactersService.CreateAsync(model);
+            this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION] = string.Format(NotificationsConstants.SUCCESSFUL_CREATED_A_CHARACTER, model.Name);
 
             return this.RedirectToAction("index");
         }
@@ -91,6 +105,7 @@
             bool areMangasEmpty = mangas.Count() == 0;
             if (isCharacterNull || areMangasEmpty)
             {
+                this.TempData[NotificationsConstants.ERROR_NOTIFICATION] = NotificationsConstants.CANNOT_GET_A_DETAILS_ABOUT_EMPTY_CHARACTER;
                 return this.RedirectToAction("index");
             }
 
@@ -110,6 +125,7 @@
             }
 
             await this.charactersService.UpdateAsync(model);
+            this.TempData[NotificationsConstants.SUCCESS_NOTIFICATION] = string.Format(NotificationsConstants.SUCCESSFUL_UPDATE_A_CHARACTER, model.Name);
 
             return this.RedirectToAction("index");
         }
