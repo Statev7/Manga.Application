@@ -3,13 +3,18 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
+    using Microsoft.Extensions.Configuration;
+
     using CreateManga.Application.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        private readonly IConfiguration configuration;
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
             : base(options)
         {
+            this.configuration = configuration;
         }
 
         public DbSet<Manga> Manga { get; set; }
@@ -24,12 +29,10 @@
         {
             base.OnConfiguring(optionsBuilder);
 
-            bool isConfigured = optionsBuilder.IsConfigured;
-
-            if (!isConfigured)
+            if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder
-                .UseSqlServer("Server=.;Database=CreateManga;Trusted_Connection=True;MultipleActiveResultSets=true");
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             } 
         }
 
