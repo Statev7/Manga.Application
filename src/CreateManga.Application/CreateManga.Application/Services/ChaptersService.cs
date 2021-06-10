@@ -17,6 +17,8 @@
 
     public class ChaptersService : IChaptersService
     {
+        private const string IMAGE_FOLDER_NAME = "/Img/ChaptersImage/";
+
         private readonly ApplicationDbContext dbContext;
         private readonly IWebHostEnvironment hostEnvironment;
 
@@ -87,16 +89,7 @@
 
             if (model.ImageFile != null)
             {
-                string wwwRootPath = hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(chapter.ImageFile.FileName);
-                string exension = Path.GetExtension(chapter.ImageFile.FileName);
-                chapter.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
-                string path = Path.Combine(wwwRootPath + "/Img/ChaptersImage/", fileName);
-
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await chapter.ImageFile.CopyToAsync(fileStream);
-                }
+                await SetImage(chapter);
             }
 
             await this.dbContext.Chapter.AddAsync(chapter);
@@ -141,16 +134,7 @@
 
             if (model.ImageFile != null)
             {
-                string wwwRootPath = hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(chapter.ImageFile.FileName);
-                string exension = Path.GetExtension(chapter.ImageFile.FileName);
-                chapter.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
-                string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
-
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await chapter.ImageFile.CopyToAsync(fileStream);
-                }
+                await SetImage(chapter);
             }
 
             this.dbContext.Chapter.Update(chapter);
@@ -173,5 +157,18 @@
             await this.dbContext.SaveChangesAsync();
         }
 
+        private async Task SetImage(Chapter chapter)
+        {
+            string wwwRootPath = hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(chapter.ImageFile.FileName);
+            string exension = Path.GetExtension(chapter.ImageFile.FileName);
+            chapter.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
+            string path = Path.Combine(wwwRootPath + IMAGE_FOLDER_NAME, fileName);
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await chapter.ImageFile.CopyToAsync(fileStream);
+            }
+        }
     }
 }

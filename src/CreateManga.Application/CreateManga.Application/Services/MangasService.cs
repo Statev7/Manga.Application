@@ -17,6 +17,8 @@
 
     public class MangasService : IMangasService
     {
+        private const string IMAGE_FOLDER_NAME = "/ImageFromUsers/";
+
         private readonly ApplicationDbContext dbContext;
         private readonly IWebHostEnvironment hostEnvironment;
         private readonly IMangasUsersService mangasUsersService;
@@ -88,16 +90,7 @@
 
             if (model.ImageFile != null)
             {
-                string wwwRootPath = hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
-                string exension = Path.GetExtension(manga.ImageFile.FileName);
-                manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
-                string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
-
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await manga.ImageFile.CopyToAsync(fileStream);
-                }
+                await SetImage(manga);
             }
 
             await this.dbContext.Manga.AddAsync(manga);
@@ -146,16 +139,7 @@
 
             if (model.ImageFile != null)
             {
-                string wwwRootPath = hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
-                string exension = Path.GetExtension(manga.ImageFile.FileName);
-                manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
-                string path = Path.Combine(wwwRootPath + "/ImageFromUsers/", fileName);
-
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await manga.ImageFile.CopyToAsync(fileStream);
-                }
+                await SetImage(manga);
             }
 
             this.dbContext.Manga.Update(manga);
@@ -187,6 +171,20 @@
             bool isExist =  manga != null;
 
             return isExist;
+        }
+
+        private async Task SetImage(Manga manga)
+        {
+            string wwwRootPath = hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(manga.ImageFile.FileName);
+            string exension = Path.GetExtension(manga.ImageFile.FileName);
+            manga.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + exension;
+            string path = Path.Combine(wwwRootPath + IMAGE_FOLDER_NAME, fileName);
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await manga.ImageFile.CopyToAsync(fileStream);
+            }
         }
     }
 }
