@@ -16,7 +16,9 @@
     <header id="header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3" style="border-bottom: 1px solid silver">
             <div class="container">
-                <img src="~/Img/Manga-Logo.png" class="img-fluid" alt="Logo" style="margin-right: 15px" />
+                <a asp-area="" asp-controller="Home" asp-action="Index" style="text-decoration: none">
+                    <img src="~/Img/Manga-Logo.png" class="img-fluid" alt="Logo" style="margin-right: 15px" />
+                </a>
                 <a class="my-nav-link navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CreateManga</a>
                 <button class="navbar-toggler navbar-dark bg-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">

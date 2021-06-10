@@ -13,45 +13,55 @@
         this.User.IsInRole(RolesConstants.AUTHOR_ROLE_NAME);
 }
 
-<h1>Characters</h1>
-<br />
-@if (isHaveCreatePermissions)
-{
-    <div>
-        <a class="btn btn-outline-danger" asp-action="Create">Create Character</a>
-    </div>
-}
-<br />
-<table class="table text-white">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (GetAllCharactersViewModel character in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => character.Name)
-                </td>
-                <td>
-                    <a class="options-bar" asp-controller="Characters" asp-action="Details" asp-route-id="@character.Id">
-                        <span>Details</span>
-                    </a>
 
-                    @if (isHaveUpdatePermissions)
-                    {
-                        <span>|</span>
-                        <a class="options-bar" asp-controller="Characters" asp-action="Update" asp-route-id="@character.Id">
-                            Update
-                        </a>
-                    }
-                </td>
-            </tr>
+<div class="d-flex justify-content-between align-items-center" style="border-bottom: 1px solid white">
+    <h1>
+        All characters
+    </h1>
+    @if (isHaveCreatePermissions)
+    {
+        <div>
+            <a class="btn btn-outline-danger" asp-action="Create">Create Character</a>
+        </div>
+    }
+</div>
+<table class="table text-white mt-5">
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <div class="pt-5 text-center">
+                <h3 style="color: red">No characters available for display!</h3>
+            </div>
         }
+        else
+        {
+            @foreach (GetAllCharactersViewModel characters in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="chapter-form">
+                            <div class="chapter-info">
+                                <div class="chapter-title">
+                                    Character name: <span>@characters.Name</span>
+                                </div>
+                                <div class="pt-5">
+                                    <a class="options-bar" asp-controller="Characters" asp-action="Details" asp-route-id="@characters.Id">
+                                        <span>Details</span>
+                                    </a>
+                                    @if (isHaveUpdatePermissions)
+                                    {
+                                        <span>|</span>
+                                        <a class="options-bar" asp-controller="Characters" asp-action="Update" asp-route-id="@characters.Id">
+                                            Update
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+
     </tbody>
 </table>
